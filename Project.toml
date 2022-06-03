@@ -1,0 +1,4 @@
+name = "Shapley"
+uuid = "482b73d4-b068-4034-8039-9e2329f324f9"
+authors = ["kozvojtex <vojtech.kozel.cz@gmail.com>"]
+version = "0.1.0"
