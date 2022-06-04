@@ -11,7 +11,7 @@ Base.@kwdef mutable struct Agent{T} <: Component
     output::AbstractArray = model(data)
 end
 
-Base.@kwdef mutable struct Network{T}  <: Component
+Base.@kwdef mutable struct Network{T} <: Component
     model::T
     name::String
     ps::Dict{Symbol, Vector} = Dict{Symbol, Vector}()
