@@ -1,9 +1,4 @@
 
-module Shapley
-
-export shapley
-export Agent, Network
-
 Base.@kwdef mutable struct Agent{T}
     model::T
     ps::Dict{Symbol, Vector}
@@ -40,6 +35,3 @@ end
 function shapley_value(agent::Agent, network::Network, expected::Array{AbstractFloat, N, M}) where {T, N, M}
     # Compute the Shapley value of the agent
 end
-    
-
-end # module
