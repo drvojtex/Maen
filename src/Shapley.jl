@@ -39,7 +39,6 @@ end
 
 function shapley_value(agent::Agent, network::Network, expected::Array{AbstractFloat, N, M}) where {T, N, M}
     # Compute the Shapley value of the agent
-    
 end
     
 
