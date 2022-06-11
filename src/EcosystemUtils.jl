@@ -43,7 +43,10 @@ function create_ecosystem(setup_file::String)
             components[name] = Network(
                 id = component["id"],
                 name = name,
-                model = getfield(Main, Symbol(component["model"]))
+                model = getfield(Main, Symbol(component["model"])),
+                in_shape = Tuple(component["shapes"]["in"]),
+                out_shape = Tuple(component["shapes"]["out"]),
+                data = zeros(Float32, Tuple(component["shapes"]["in"]))
             )
         end
     end
