@@ -2,12 +2,23 @@
 using JSON, Graphs
 
 function create_ecosystem(setup_file::String)
-    setup_json::Dict() = JSON.parsefile(setup_file)
+
+    # Load the setup file
+    setup_json::Dict{String, Any} = JSON.parsefile(setup_file)
 
     #
     map(xy->xy[2][2]["id"]=xy[1], enumerate(setup_json))
     #
 
+    # Create the ecosystem graph
+    graph::SimpleDiGraph{Int64} = create_graph(setup_json)
+
+    # Create the ecosystem components
+    components::Dict{String, Component} = create_components(setup_json)
+    
+end
+
+function create_graph(setup_json::setup_json::Dict{String, Any})
     function get_neighbours(name::String, j::Dict{String, Any}) 
         ns::Vector{String} = j[name]["target"]
         return Vector{Tuple{Int64, Int64}}([
@@ -16,8 +27,10 @@ function create_ecosystem(setup_file::String)
     end
     edges::Vector{Tuple{Int64, Int64}} = Vector{Tuple{Int64, Int64}}([])
     map(x -> append!(edges, get_neighbours(x, setup_json)), collect(keys(setup_json)))
-    g::SimpleDiGraph{Int64} = SimpleDiGraph(edges)
+    return SimpleDiGraph(edges) 
+end
 
+function create_components(setup_json::setup_json::Dict{String, Any})
     components::Dict{String, Component} = Dict{String, Component}()
 
     for sj in setup_json
@@ -50,4 +63,5 @@ function create_ecosystem(setup_file::String)
             )
         end
     end
+    return components
 end
