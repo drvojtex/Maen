@@ -6,15 +6,13 @@ function create_ecosystem(setup_file::String)
     # Load the setup file
     setup_json::Dict{String, Any} = JSON.parsefile(setup_file)
 
-    #
-    map(xy->xy[2][2]["id"]=xy[1], enumerate(setup_json))
-    #
-
     # Create the ecosystem graph
     graph::SimpleDiGraph{Int64} = create_graph(setup_json)
 
     # Create the ecosystem components
     components::Dict{String, Component} = create_components(setup_json)
+
+
     
 end
 
@@ -27,7 +25,7 @@ function create_graph(setup_json::setup_json::Dict{String, Any})
     end
     edges::Vector{Tuple{Int64, Int64}} = Vector{Tuple{Int64, Int64}}([])
     map(x -> append!(edges, get_neighbours(x, setup_json)), collect(keys(setup_json)))
-    return SimpleDiGraph(edges) 
+    return SimpleDiGraph(Edge.(edges))
 end
 
 function create_components(setup_json::setup_json::Dict{String, Any})
@@ -36,32 +34,28 @@ function create_components(setup_json::setup_json::Dict{String, Any})
     for sj in setup_json
         name = sj[1]
         component = sj[2]
-        if component["type"] == "input"
+        ctype = lowercase(component["type"])
+        if ctype == "input"
             components[name] = InputAgent(
                 id = component["id"],
-                name = name,
-                shape = Tuple(component["shapes"]["in"]),
-                data = zeros(Float32, Tuple(component["shapes"]["in"]))
+                name = name
             )
-        elseif component["type"] == "hidden"
+        elseif ctype in ["hidden", "network"]
             components[name] = HiddenAgent(
                 id = component["id"],
                 name = name,
-                model = getfield(Main, Symbol(component["model"])),
-                in_shape = Tuple(component["shapes"]["in"]),
-                out_shape = Tuple(component["shapes"]["out"]),
-                data = zeros(Float32, Tuple(component["shapes"]["in"]))
+                model = getfield(Main, Symbol(component["model"]))
             )
-        elseif component["type"] == "network"
-            components[name] = Network(
-                id = component["id"],
-                name = name,
-                model = getfield(Main, Symbol(component["model"])),
-                in_shape = Tuple(component["shapes"]["in"]),
-                out_shape = Tuple(component["shapes"]["out"]),
-                data = zeros(Float32, Tuple(component["shapes"]["in"]))
-            )
+            if ctype == "network"
+                components[name] = Network(components[name])
+            end
         end
     end
     return components
+end
+
+function connect_components(c_id::Int64, cin_ids::AbstractArray{Inf64},
+                           components::Dict{String, Component})
+    c::Component = filter(x->x.id == c_id, components)[1]
+
 end
