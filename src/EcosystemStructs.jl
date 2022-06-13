@@ -1,10 +1,10 @@
 
 using JSON
 
-Base.@kwdef mutable struct HiddenAgent{T} <: Agent
+Base.@kwdef mutable struct HiddenAgent <: Agent
     id::Int64
     name::String
-    model::T
+    model::String
 end
 
 let input_id::Int = 0
@@ -21,10 +21,10 @@ let input_id::Int = 0
     end
 end
 
-Base.@kwdef mutable struct Network{T} <: Component
+Base.@kwdef mutable struct Network <: Component
     id::Int64
     name::String
-    model::T
+    model::String
 end
 
 HiddenAgent(n::Network) = HiddenAgent(id=n.id, name=n.name, model=n.model)

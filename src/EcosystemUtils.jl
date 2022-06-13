@@ -23,7 +23,7 @@ function create_ecosystem(setup_file::String, model_params::AbstractArray)
         write(f, "\n$m")
     end
 
-    bson("$(dirname(setup_file))/ecosystem.bson", graph=graph, components=components, ps=model_params)
+    bson("$(dirname(setup_file))/ecosystem.bson", graph=graph, components=components)
 
 end
 
@@ -52,7 +52,7 @@ function create_components(setup_json::Dict{String, Any})
             components[name] = HiddenAgent(
                 id = component["id"],
                 name = name,
-                model = getfield(Main, Symbol(component["model"]))
+                model = String(Symbol(component["model"]))
             )
             if ctype == "network"
                 components[name] = Network(components[name])
