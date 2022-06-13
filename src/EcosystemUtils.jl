@@ -23,7 +23,7 @@ function create_ecosystem(setup_file::String)
         write(f, "\n$m")
     end
 
-    bson("$(dirname(setup_file))/ecosystem.bson", graph=graph, components=components)
+    bson("$(dirname(setup_file))/ecosystem.bson", graph=graph, components=components, ps=model_params)
 
 end
 
@@ -83,12 +83,4 @@ function get_complex_function(top::Int64, badjlist::Vector{Vector{Int64}},
     dfs_rec(top)
     println(s)
     return s
-end
-
-function reload_model_functions(setup_file_jl::String) 
-    include(setup_file_jl)
-end
-
-function run()
-    model([1, 1])
 end
