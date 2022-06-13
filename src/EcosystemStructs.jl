@@ -1,5 +1,5 @@
 
-using UUIDs, JSON
+using JSON
 
 Base.@kwdef mutable struct HiddenAgent{T} <: Agent
     id::Int64

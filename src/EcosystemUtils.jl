@@ -1,5 +1,6 @@
 
-using JSON, Graphs
+using Graphs
+using BSON, JSON
 
 function create_ecosystem(setup_file::String)
 
@@ -11,12 +12,22 @@ function create_ecosystem(setup_file::String)
 
     # Create the ecosystem components
     components::Dict{String, Component} = create_components(setup_json)
-
-
     
+    # Create the ecosystem model
+    m = get_complex_function(
+        filter(x->thetype(typeof(x)) == Network, collect(values(components)))[1].id, 
+        deepcopy(graph.badjlist), collect(values(components))
+    )
+
+    open("$(dirname(setup_file))/setup.jl", "a") do f
+        write(f, "\n$m")
+    end
+
+    bson("$(dirname(setup_file))/ecosystem.bson", graph=graph, components=components)
+
 end
 
-function create_graph(setup_json::setup_json::Dict{String, Any})
+function create_graph(setup_json::Dict{String, Any})
     function get_neighbours(name::String, j::Dict{String, Any}) 
         ns::Vector{String} = j[name]["target"]
         return Vector{Tuple{Int64, Int64}}([
@@ -28,7 +39,7 @@ function create_graph(setup_json::setup_json::Dict{String, Any})
     return SimpleDiGraph(Edge.(edges))
 end
 
-function create_components(setup_json::setup_json::Dict{String, Any})
+function create_components(setup_json::Dict{String, Any})
     components::Dict{String, Component} = Dict{String, Component}()
 
     for sj in setup_json
@@ -36,10 +47,7 @@ function create_components(setup_json::setup_json::Dict{String, Any})
         component = sj[2]
         ctype = lowercase(component["type"])
         if ctype == "input"
-            components[name] = InputAgent(
-                id = component["id"],
-                name = name
-            )
+            components[name] = InputAgent(component["id"], name)
         elseif ctype in ["hidden", "network"]
             components[name] = HiddenAgent(
                 id = component["id"],
@@ -54,8 +62,33 @@ function create_components(setup_json::setup_json::Dict{String, Any})
     return components
 end
 
-function connect_components(c_id::Int64, cin_ids::AbstractArray{Inf64},
-                           components::Dict{String, Component})
-    c::Component = filter(x->x.id == c_id, components)[1]
+function get_complex_function(top::Int64, badjlist::Vector{Vector{Int64}}, 
+        components::AbstractArray{Component})
+    map(x->append!(x, -1), badjlist)
 
+    s = "model(x) = "
+    b = false
+    function dfs_rec(v)
+        if v == -1
+            b = true
+            s *= ")"
+            return
+        end
+        if b s *= ", " end
+        b = false
+        s *= "$(string(nameof(filter(x->x.id == v, components)[1].model)))("
+        if badjlist[v][1] == -1 s *= "x[$(components[v].input_id)]" end
+        for w in badjlist[v] dfs_rec(w) end
+    end
+    dfs_rec(top)
+    println(s)
+    return s
+end
+
+function reload_model_functions(setup_file_jl::String) 
+    include(setup_file_jl)
+end
+
+function run()
+    model([1, 1])
 end

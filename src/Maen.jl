@@ -1,6 +1,6 @@
 module Maen
 
-export shapley
+export shapley, create_ecosystem
 export Ecosystem
 export Network, InputAgent, HiddenAgent
 
