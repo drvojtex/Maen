@@ -2,7 +2,7 @@
 using Graphs
 using BSON, JSON
 
-function create_ecosystem(setup_file::String, model_params::AbstractArray)
+function create_ecosystem(setup_file::String)
 
     # Load the setup file
     setup_json::Dict{String, Any} = JSON.parsefile(setup_file)
