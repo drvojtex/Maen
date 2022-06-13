@@ -23,6 +23,7 @@ function create_ecosystem(setup_file::String)
         write(f, "\n$m")
     end
 
+    global model_params
     bson("$(dirname(setup_file))/ecosystem.bson", graph=graph, components=components, ps=model_params)
 
 end
