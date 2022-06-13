@@ -76,8 +76,7 @@ function get_complex_function(top::Int64, badjlist::Vector{Vector{Int64}},
         end
         if b s *= ", " end
         b = false
-        @show string(nameof(filter(x->x.id == v, components)[1].model))
-        s *= "$(string(nameof(filter(x->x.id == v, components)[1].model)))("
+        s *= "$(filter(x->x.id == v, components)[1].model)("
         if badjlist[v][1] == -1 s *= "x[$(components[v].input_id)]" end
         for w in badjlist[v] dfs_rec(w) end
     end
