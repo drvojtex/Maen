@@ -3,14 +3,8 @@ using Flux, Zygote
 using BSON, JSON
 using Graphs
 
-function load_model(path::String) 
+function load_model(path::String, ps::Zygote.Params{Zygote.Buffer{Any, Vector{Any}}}) 
     ecosystem::Dict{Symbol, Any} = BSON.load("$path/ecosystem.bson")
-    include("$path/functions.jl")
-
-    @show model([randn(1), randn(1)])
-
-    map(x->x[1].=x[2], zip(model_params, ecosystem[:model_params]))
-
-    @show model([randn(1), randn(1)])
-
+    map(x->x[1].=x[2], zip(ps, ecosystem[:model_params]))
+    return ecosystem
 end
