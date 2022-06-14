@@ -89,3 +89,9 @@ function get_complex_function(top::Int64, badjlist::Vector{Vector{Int64}},
     println(s)
     return s
 end
+
+function load_model(path::String, ps::Zygote.Params{Zygote.Buffer{Any, Vector{Any}}}) 
+    ecosystem::Dict{Symbol, Any} = BSON.load("$path/ecosystem.bson")
+    map(x->x[1].=x[2], zip(ps, ecosystem[:model_params]))
+    return ecosystem
+end

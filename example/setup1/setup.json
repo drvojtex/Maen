@@ -1,0 +1,63 @@
+{
+    "hidden1": {
+        "model": "model_f",
+        "id": 4,
+        "target": [
+            "hidden4"
+        ],
+        "type": "hidden"
+    },
+    "hidden3": {
+        "model": "model_h",
+        "id": 6,
+        "target": [
+            "hidden5"
+        ],
+        "type": "hidden"
+    },
+    "hidden4": {
+        "model": "model_p",
+        "id": 2,
+        "target": [
+            "net1"
+        ],
+        "type": "hidden"
+    },
+    "hidden5": {
+        "model": "model_q",
+        "id": 3,
+        "target": [
+            "net1"
+        ],
+        "type": "hidden"
+    },
+    "hidden2": {
+        "model": "model_g",
+        "id": 5,
+        "target": [
+            "hidden4"
+        ],
+        "type": "hidden"
+    },
+    "net1": {
+        "model": "model_n",
+        "id": 1,
+        "target": [],
+        "type": "network"
+    },
+    "input2": {
+        "id": 8,
+        "target": [
+            "hidden3"
+        ],
+        "type": "input"
+    },
+    "input1": {
+        "id": 7,
+        "target": [
+            "hidden1",
+            "hidden2"
+        ],
+        "type": "input"
+    }
+}

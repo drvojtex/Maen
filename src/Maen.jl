@@ -1,7 +1,6 @@
 module Maen
 
-export shapley, create_ecosystem
-export Ecosystem
+export shapley, create_ecosystem, load_model
 export Network, InputAgent, HiddenAgent
 
 abstract type Component end
