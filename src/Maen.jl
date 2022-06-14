@@ -13,14 +13,4 @@ include("EcosystemStructs.jl")
 include("EcosystemUtils.jl")
 include("Visualise.jl")
 
-function include(s::String)
-    if isdir(s)
-        for f in glob(s + "/*.jl")
-            include(f)
-        end
-    else
-        include(s)
-    end
-end
-
 end # module
