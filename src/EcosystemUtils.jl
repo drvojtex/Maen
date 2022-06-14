@@ -4,7 +4,7 @@ using BSON, JSON
 using Flux, Zygote
 
 function create_ecosystem(setup_file::String, functions::String, 
-        ps::AbstractArray, model_path::String)
+        ps::Zygote.Params{Zygote.Buffer{Any, Vector{Any}}}, model_path::String)
 
     # Load the setup file
     setup_json::Dict{String, Any} = JSON.parsefile(setup_file)
