@@ -1,8 +1,10 @@
 
 using Graphs
 using BSON, JSON
+using Flux, Zygote
 
-function create_ecosystem(setup_file::String)
+function create_ecosystem(setup_file::String, functions::String, 
+        ps::AbstractArray, model_path::String)
 
     # Load the setup file
     setup_json::Dict{String, Any} = JSON.parsefile(setup_file)
@@ -19,11 +21,13 @@ function create_ecosystem(setup_file::String)
         deepcopy(graph.badjlist), collect(values(components))
     )
 
-    open("$(dirname(setup_file))/setup.jl", "a") do f
+    # Create the ecosystem folder
+    mkdir(model_path)
+    run(`cp $functions $model_path/functions.jl`)
+    open("$model_path/functions.jl", "a") do f
         write(f, "\n$m")
     end
-
-    bson("$(dirname(setup_file))/ecosystem.bson", graph=graph, components=components)
+    bson("$model_path/ecosystem.bson", graph=graph, components=components, model_params=ps)
 
 end
 
