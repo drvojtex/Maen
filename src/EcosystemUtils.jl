@@ -14,7 +14,7 @@ function create_ecosystem(setup_file::String, functions::String,
 
     # Create the ecosystem components
     components::Dict{String, Component} = create_components(setup_json)
-    
+
     # Create the ecosystem model
     m = get_complex_function(
         filter(x->thetype(typeof(x)) == Network, collect(values(components)))[1].id, 
@@ -69,6 +69,7 @@ end
 function get_complex_function(top::Int64, badjlist::Vector{Vector{Int64}}, 
         components::AbstractArray{Component})
     map(x->append!(x, -1), badjlist)
+    sort!(components, by=x->x.id)
 
     s = "model(x) = "
     b = false
