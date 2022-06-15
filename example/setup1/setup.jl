@@ -1,22 +1,30 @@
 
 using Flux
 
-params_objcts = []
+params_objects = []
+
+function get_model_lstm()
+    l = LSTM(100, 10)
+    function get_model_lstm(x)
+        return l(x)
+    end
+    append!(params_objects, [l])
+    return get_model_lstm
+end
+model_o = get_model_lstm()
+model_c = get_model_lstm()
+model_h = get_model_lstm()
+model_l = get_model_lstm()
 
 function get_model_dense()
-    d = Dense(1, 1)
-    function get_model_dense(x)
+    d = Dense(40, 1)
+    function get_model_dense(x1, x2, x3, x4)
+        x = vcat(x1, x2, x3, x4)
         return d(x)
     end
-    append!(params_objcts, [d])
+    append!(params_objects, [d])
     return get_model_dense
 end
-model_f = get_model_dense()
-model_g = get_model_dense()
-model_h = get_model_dense()
-model_q = get_model_dense()
+model_n = get_model_dense()
 
-model_p(x, y) = x .+ y
-model_n(x, y) = x .+ y
-
-model_params = Flux.params(params_objcts)
+model_params = Flux.params(params_objects)

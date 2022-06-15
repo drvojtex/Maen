@@ -29,7 +29,6 @@ function create_ecosystem(setup_file::String, functions::String,
     end
     bson("$model_path/ecosystem.bson", graph=graph, components=components, model_params=ps)
     simple_visu(graph, collect(values(components)), "$model_path/schema.pdf")
-
 end
 
 function create_graph(setup_json::Dict{String, Any})
