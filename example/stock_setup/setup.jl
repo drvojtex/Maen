@@ -4,7 +4,7 @@ using Flux
 params_objects = []
 
 function get_model_lstm()
-    l = LSTM(100, 10)
+    l = LSTM(100, 2)
     function get_model_lstm(x)
         return l(x)
     end
@@ -17,7 +17,7 @@ model_h = get_model_lstm()
 model_l = get_model_lstm()
 
 function get_model_dense()
-    d = Dense(40, 1)
+    d = Dense(8, 1)
     function get_model_dense(x1, x2, x3, x4)
         x = vcat(x1, x2, x3, x4)
         return d(x)
