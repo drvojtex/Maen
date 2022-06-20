@@ -1,5 +1,6 @@
 
 using Maen
+using Flux
 
 graph, components = create_ecosystem("setup.json")
 sch = scheduling(graph)
