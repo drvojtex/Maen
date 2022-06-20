@@ -1,5 +1,6 @@
 
 using JSON
+using Graphs
 
 mutable struct Component{T <: ComponentType} <: AbstractComponent{T}
     id::Int64
