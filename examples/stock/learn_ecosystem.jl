@@ -56,7 +56,9 @@ end
 
 #accuracy(x,y) = mean(map(xy -> abs(model(xy[1])[1] .- xy[2][1])/xy[2][1] < 0.1, zip(x, y)))
 accuracy(x,y) = mean(map(x->round(model(x[1])[1]) == x[2][1], zip(x, y)))
+
 cb = () -> println("accuracy = ", accuracy(data, labels), " loss = ", loss_cb(data, labels))
+
 loss_cb = (x, y) -> mapreduce(xy-> Flux.mse(model(xy[1]), y[2]), +, zip(x, y))
 loss = (x, y) -> runminibatch(x, y)
 

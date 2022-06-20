@@ -8,6 +8,13 @@ mutable struct Component{T <: ComponentType} <: AbstractComponent{T}
     shapley::AbstractFloat
 end
 
+struct Ecosystem
+    g::SimpleDiGraph{Int64}
+    schc::Vector{Component}
+    ii::Vector{Int64}
+    sch::Vector{Int64}
+end
+
 function Base.show(io::IO, a::Component)
     println(io, 
             json(Dict(

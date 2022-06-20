@@ -54,20 +54,19 @@ function scheduling(g::SimpleDiGraph{Int64})
     return sch
 end
 
-function schedule_components_2_vec(components::Dict{String, Component}, sch::Vector{Int64})
+function scv(components::Dict{String, Component}, sch::Vector{Int64})
     sort(map(x->x[2], collect(components)), by=x->x.id)[sch]
 end
 
-function model(g::SimpleDiGraph{Int64}, components::Vector{Component}, 
-        inputs_ids::Dict{Int64, Int64}, sch::Vector{Int64}, data)
+function model(eco::Ecosystem, data)
     
     values = []
-    for c in components
-        ids = g.badjlist[c.id]
-        idxs = findall(x -> x ∈ ids, sch)
+    for c in eco.schc
+        ids = eco.g.badjlist[c.id]
+        idxs = findall(x -> x ∈ ids, eco.sch)
         tmp = length(idxs) > 0 ? 
             (length(idxs) == 1 ? c.model(values[idxs[1]]) : 
-                c.model(values[idxs])) : c.model(data[inputs_ids[c.id]])
+                c.model(values[idxs])) : c.model(data[eco.ii[c.id]])
         values = vcat(values, [tmp])
     end
 

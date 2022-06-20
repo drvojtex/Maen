@@ -1,7 +1,7 @@
 module Maen
 
 export shapley
-export create_ecosystem, model, schedule_components_2_vec, scheduling
+export create_ecosystem, model, scv, scheduling
 export simple_visu
 export Component
 export InputAgent, HiddenAgent, NetworkAgent
