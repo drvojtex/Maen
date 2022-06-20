@@ -12,7 +12,7 @@ end
 struct Ecosystem
     g::SimpleDiGraph{Int64}
     schc::Vector{Component}
-    ii::Vector{Int64}
+    ii::Dict{Int64, Int64}
     sch::Vector{Int64}
 end
 
