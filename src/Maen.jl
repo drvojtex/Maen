@@ -1,10 +1,16 @@
 module Maen
 
-export shapley, create_ecosystem, load_model
-export Network, InputAgent, HiddenAgent
+export shapley
+export create_ecosystem, model, schedule_components_2_vec, schelduding
+export simple_visu
+export Component
+export InputAgent, HiddenAgent, NetworkAgent
 
-abstract type Component end
-abstract type Agent <: Component end
+abstract type AbstractComponent{T} end
+abstract type ComponentType end
+abstract type InputAgent <: ComponentType end
+abstract type HiddenAgent <: ComponentType end
+abstract type NetworkAgent <: ComponentType end
 
 include("Shapley.jl")
 include("EcosystemStructs.jl")

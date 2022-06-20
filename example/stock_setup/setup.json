@@ -1,68 +1,77 @@
 {
     "hidden1": {
         "id": 5,
-        "type": "hidden",
+        "type": "HiddenAgent",
         "target": [
             "net1"
-        ],
-        "model": "lstm_o"
+        ]
+    },
+    "hidden_dense": {
+        "id": 10,
+        "type": "HiddenAgent",
+        "target": [
+            "net1"
+        ]
+    },
+    "stat_features": {
+        "id": 11,
+        "type": "HiddenAgent",
+        "target": [
+            "net1"
+        ]
     },
     "high": {
         "id": 4,
-        "type": "input",
+        "type": "InputAgent",
         "target": [
-            "hidden4"
+            "hidden4", "hidden_dense"
         ]
     },
     "open": {
         "id": 1,
-        "type": "input",
+        "type": "InputAgent",
         "target": [
-            "hidden1"
+            "hidden1", "hidden_dense"
         ]
     },
     "hidden3": {
         "id": 7,
-        "type": "hidden",
+        "type": "HiddenAgent",
         "target": [
             "net1"
-        ],
-        "model": "lstm_l"
+        ]
     },
     "hidden4": {
         "id": 8,
-        "type": "hidden",
+        "type": "HiddenAgent",
         "target": [
             "net1"
-        ],
-        "model": "lstm_h"
+        ]
     },
     "hidden2": {
         "id": 6,
-        "type": "hidden",
+        "type": "HiddenAgent",
         "target": [
             "net1"
-        ],
-        "model": "lstm_c"
+        ]
     },
     "net1": {
         "id": 9,
-        "type": "network",
-        "target": [],
-        "model": "model_n"
+        "type": "NetworkAgent",
+        "target": []
     },
     "low": {
         "id": 3,
-        "type": "input",
+        "type": "InputAgent",
         "target": [
-            "hidden3"
+            "hidden3", "hidden_dense"
         ]
     },
     "close": {
         "id": 2,
-        "type": "input",
+        "type": "InputAgent",
         "target": [
-            "hidden2"
+            "hidden2", "hidden_dense", "stat_features"
         ]
     }
 }

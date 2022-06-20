@@ -3,32 +3,18 @@ using Graphs
 using BSON, JSON
 using Flux, Zygote
 
-function create_ecosystem(setup_file::String, functions::String, 
-        ps::Zygote.Params{Zygote.Buffer{Any, Vector{Any}}}, model_path::String)
+function create_ecosystem(sf::String)
 
     # Load the setup file
-    setup_json::Dict{String, Any} = JSON.parsefile(setup_file)
+    sj::Dict{String, Any} = JSON.parsefile(sf)
 
     # Create the ecosystem graph
-    graph::SimpleDiGraph{Int64} = create_graph(setup_json)
+    g::SimpleDiGraph{Int64} = create_graph(sj)
 
     # Create the ecosystem components
-    components::Dict{String, Component} = create_components(setup_json)
+    c::Dict{String, Component} = create_components(sj, g)
 
-    # Create the ecosystem model
-    m = get_complex_function(
-        filter(x->thetype(typeof(x)) == Network, collect(values(components)))[1].id, 
-        deepcopy(graph.badjlist), collect(values(components))
-    )
-
-    # Create the ecosystem folder
-    mkdir(model_path)
-    run(`cp $functions $model_path/functions.jl`)
-    open("$model_path/functions.jl", "a") do f
-        write(f, "\n$m")
-    end
-    bson("$model_path/ecosystem.bson", graph=graph, components=components, model_params=ps)
-    simple_visu(graph, collect(values(components)), "$model_path/schema.pdf")
+    return g, c
 end
 
 function create_graph(setup_json::Dict{String, Any})
@@ -38,60 +24,52 @@ function create_graph(setup_json::Dict{String, Any})
             (j[name]["id"], j[x]["id"]) for x in ns if haskey(j, x)
         ])
     end
-    edges::Vector{Tuple{Int64, Int64}} = Vector{Tuple{Int64, Int64}}([])
+    edges = Vector{Tuple{Int64, Int64}}([])
     map(x -> append!(edges, get_neighbours(x, setup_json)), collect(keys(setup_json)))
-    return SimpleDiGraph(Edge.(edges))
+    SimpleDiGraph(Edge.(edges))
 end
 
-function create_components(setup_json::Dict{String, Any})
-    components::Dict{String, Component} = Dict{String, Component}()
-
+function create_components(setup_json::Dict{String, Any}, graph::SimpleDiGraph{Int64})
+    components = Dict{String, Component}()
     for sj in setup_json
         name = sj[1]
-        component = sj[2]
-        ctype = lowercase(component["type"])
-        if ctype == "input"
-            components[name] = InputAgent(component["id"], name)
-        elseif ctype in ["hidden", "network"]
-            components[name] = HiddenAgent(
-                id = component["id"],
-                name = name,
-                model = String(Symbol(component["model"]))
-            )
-            if ctype == "network"
-                components[name] = Network(components[name])
-            end
-        end
+        copmt = sj[2]
+        components[name] = Component{eval(Symbol(copmt["type"]))}(
+            copmt["id"], name, 
+            length(graph.badjlist[copmt["id"]]) > 1 ? (x...) -> sum(x...) : identity, 0.0
+        )
     end
     return components
 end
 
-function get_complex_function(top::Int64, badjlist::Vector{Vector{Int64}}, 
-        components::AbstractArray{Component})
-    map(x->append!(x, -1), badjlist)
-    sort!(components, by=x->x.id)
-
-    s = "model(x) = "
-    b = false
-    function dfs_rec(v)
-        if v == -1
-            b = true
-            s *= ")"
-            return
+function scheduling(g::SimpleDiGraph{Int64})
+    sch = Vector{Int64}([])
+    for _=1:length(g.badjlist)
+        for i=1:length(g.badjlist)
+            if i ∉ sch && all(map(x -> x ∈ sch, g.badjlist[i]))
+                append!(sch, i)
+            end
         end
-        if b s *= ", " end
-        b = false
-        s *= "$(filter(x->x.id == v, components)[1].model)("
-        if badjlist[v][1] == -1 s *= "x[$(components[v].input_id)]" end
-        for w in badjlist[v] dfs_rec(w) end
     end
-    dfs_rec(top)
-    println(s)
-    return s
+    return sch
 end
 
-function load_model(path::String, ps::Zygote.Params{Zygote.Buffer{Any, Vector{Any}}}) 
-    ecosystem::Dict{Symbol, Any} = BSON.load("$path/ecosystem.bson")
-    map(x->x[1].=x[2], zip(ps, ecosystem[:model_params]))
-    return ecosystem
+function schedule_components_2_vec(components::Dict{String, Component}, sch::Vector{Int64})
+    sort(map(x->x[2], collect(components)), by=x->x.id)[sch]
+end
+
+function model(g::SimpleDiGraph{Int64}, components::Vector{Component}, 
+        inputs_ids::Dict{Int64, Int64}, sch::Vector{Int64}, data)
+    
+    values = []
+    for c in components
+        ids = g.badjlist[c.id]
+        idxs = findall(x -> x ∈ ids, sch)
+        tmp = length(idxs) > 0 ? 
+            (length(idxs) == 1 ? c.model(values[idxs[1]]) : 
+                c.model(values[idxs])) : c.model(data[inputs_ids[c.id]])
+        values = vcat(values, [tmp])
+    end
+
+    return values[end]
 end
