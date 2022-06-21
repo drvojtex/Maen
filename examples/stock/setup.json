@@ -3,7 +3,7 @@
         "id": 5,
         "type": "HiddenAgent",
         "target": [
-            "net1"
+            "hidden_dense"
         ]
     },
     "hidden_dense": {
@@ -24,35 +24,35 @@
         "id": 4,
         "type": "InputAgent",
         "target": [
-            "hidden4", "hidden_dense"
+            "hidden4"
         ]
     },
     "open": {
         "id": 1,
         "type": "InputAgent",
         "target": [
-            "hidden1", "hidden_dense"
+            "hidden1"
         ]
     },
     "hidden3": {
         "id": 7,
         "type": "HiddenAgent",
         "target": [
-            "net1"
+            "hidden_dense"
         ]
     },
     "hidden4": {
         "id": 8,
         "type": "HiddenAgent",
         "target": [
-            "net1"
+            "hidden_dense"
         ]
     },
     "hidden2": {
         "id": 6,
         "type": "HiddenAgent",
         "target": [
-            "net1"
+            "hidden_dense"
         ]
     },
     "net1": {
@@ -64,14 +64,14 @@
         "id": 3,
         "type": "InputAgent",
         "target": [
-            "hidden3", "hidden_dense"
+            "hidden3"
         ]
     },
     "close": {
         "id": 2,
         "type": "InputAgent",
         "target": [
-            "hidden2", "hidden_dense", "stat_features"
+            "hidden2", "stat_features"
         ]
     }
 }
