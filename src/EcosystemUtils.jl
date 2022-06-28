@@ -59,7 +59,6 @@ function scv(components::Dict{String, Component}, sch::Vector{Int64})
 end
 
 function model(eco::Ecosystem, data)
-    
     values = []
     for c in eco.schc
         ids = eco.g.badjlist[c.id]
@@ -69,6 +68,5 @@ function model(eco::Ecosystem, data)
                 c.model(values[idxs])) : c.model(data[eco.ii[c.id]])
         values = vcat(values, [tmp])
     end
-
-    return values[end]
+    return values
 end
