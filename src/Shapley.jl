@@ -25,7 +25,7 @@ function shapley(eco::Ecosystem, model::T,
             idxs = map(x->eco.ii[x], S)
             d = deepcopy(data)
             [d[i, :] *= 0 for i=1:size(d)[1] if i ∉ idxs];
-            m₍s₎ = mean((map(x->model(x), eachcol(d)) .> τ) .== labels)
+            m₍s₎ = mean((map(x->model(x) > τ, eachcol(d))) .== labels)
 
             α = factorial(length(S))*factorial(length(eco.ii)-length(S)-1)/factorial(length(eco.ii))
 
