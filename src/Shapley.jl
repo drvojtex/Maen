@@ -10,8 +10,10 @@ function shapley(eco::Ecosystem, model::T,
         data::Any, labels::Any, τ::Float64) where T <: Function 
     N = collect(powerset(eco.ii))
     Φ = Dict{Int64, Float64}()
+    ν = []
     for ii in keys(eco.ii)
         ϕ = 0
+        tmp_ν = Vector{Float64}()
         for S in N
 
             idxs = map(x->eco.ii[x], S)
@@ -28,9 +30,11 @@ function shapley(eco::Ecosystem, model::T,
             α = factorial(length(S))*factorial(length(eco.ii)-length(S)-1)/factorial(length(eco.ii))
 
             ϕ += (α * (m₍si₎ - m₍s₎))
+            append!(tmp_ν, m₍si₎ - m₍s₎)
 
         end
         Φ[ii] = ϕ
+        append!(ν, [tmp_ν])
     end
-    return Φ
+    return Φ, ν
 end

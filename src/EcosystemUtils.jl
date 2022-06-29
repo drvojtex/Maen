@@ -42,6 +42,7 @@ function create_components(setup_json::Dict{String, Any}, graph::SimpleDiGraph{I
     return components
 end
 
+# TODO: remove n^2 complexity (its only bfs)
 function scheduling(g::SimpleDiGraph{Int64})
     sch = Vector{Int64}([])
     for _=1:length(g.badjlist)
