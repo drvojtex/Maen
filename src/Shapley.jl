@@ -19,7 +19,7 @@ function shapley(eco::Ecosystem, model::T,
             idxs = map(x->eco.ii[x], S)
             d = deepcopy(data)
             [d[i, :] *= 0 for i=1:size(d)[1] if i ∉ idxs];
-            m₍si₎ = mean((map(x->model(x), eachcol(d)) .> τ) .== labels)
+            m₍si₎ = mean((map(x->model(x) > τ, eachcol(d))) .== labels)
 
             deleteat!(S, findall(x->x==ii, S))
             idxs = map(x->eco.ii[x], S)

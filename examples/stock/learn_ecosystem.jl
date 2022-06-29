@@ -24,6 +24,6 @@ cb = () -> println("accuracy = ", acc(data, labels),
 
 println("total: accuracy = ", acc(data, labels), " loss = ", loss(data, labels))
 
-println(binary_eval_report(reduce(vcat, testbatch()[2])[:,1], minibatchrun(testbatch()[1])))
+JSON.print(binary_eval_report(reduce(vcat, testbatch()[2])[:,1], reduce(vcat, minibatchrun(testbatch()[1]))), 4)
 
 #bson("model.bson", ecosystem=eco, ps=params_objects)

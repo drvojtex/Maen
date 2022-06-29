@@ -9,7 +9,7 @@ df = filter(x->x.Name=="JPM", CSV.read("all_stocks_5yr.csv", DataFrame))
 
 data = []
 labels = []
-partition = rand(Bernoulli(0.8), size(df)[1]-100)
+p = rand(Bernoulli(0.8), size(df)[1]-100)
 
 for i=1:size(df)[1]-100
     tmp = deepcopy(df[i:i+window-1, 2:5])  # get 100 days of stock
@@ -27,11 +27,11 @@ labels = reduce(vcat, labels)
 
 function minibatch()
     idx = sample(1:length(labels), 50, replace=true)
-    filter!(x -> Bool(partition[x]), idx)
+    filter!(x -> Bool(p[x]), idx)
     data[:, idx], labels[idx]
 end
 
 function testbatch()
-    idx = filter(x -> !Bool(partition[x]), collect(1:size(df)[1]-100))
+    idx = filter(x -> !Bool(p[x]), collect(1:size(df)[1]-100))
     data[:, idx], labels[idx]
 end
