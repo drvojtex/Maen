@@ -1,5 +1,5 @@
 
-using Combinatorics
+using Combinatorics, StatsBase
 
 @doc """
 The Shapley algorithm (solution concept in cooperative game theory) for computing 
@@ -10,7 +10,7 @@ function shapley(eco::Ecosystem, model::T,
         data::Any, labels::Any, τ::Float64) where T <: Function 
     N = collect(powerset(eco.ii))
     Φ = Dict{Int64, Float64}()
-    ν = []
+    ν = Dict{Int64, Vector{Float64}}()
     for ii in keys(eco.ii)
         ϕ = 0
         tmp_ν = Vector{Float64}()
@@ -34,7 +34,7 @@ function shapley(eco::Ecosystem, model::T,
 
         end
         Φ[ii] = ϕ
-        append!(ν, [tmp_ν])
+        ν[ii] = tmp_ν
     end
     return Φ, ν
 end

@@ -3,7 +3,7 @@ using Maen
 using StatsBase, Statistics, IterTools, MLDataPattern
 using Flux, EvalMetrics
 using Flux: @epochs
-using BSON
+using BSON, JSON
 
 #map(x->x[1].=x[2], zip(model_params, ecosystem[:model_params]))
 
