@@ -16,18 +16,13 @@ function shapley(eco::Ecosystem, model::T,
         tmp_ν = Vector{Float64}()
         for S in N
 
-            idxs = map(x->eco.ii[x], S)
-            d = deepcopy(data)
-            [d[i, :] *= 0 for i=1:size(d)[1] if i ∉ idxs];
-            m₍si₎ = mean((map(x->model(x) > τ, eachcol(d))) .== labels)
+            m₍si₎ = get_effort(data, labels, S, τ, eco, model)
+            m₍s₎ = get_effort(data, labels, S, τ, eco, model)
 
-            deleteat!(S, findall(x->x==ii, S))
-            idxs = map(x->eco.ii[x], S)
-            d = deepcopy(data)
-            [d[i, :] *= 0 for i=1:size(d)[1] if i ∉ idxs];
-            m₍s₎ = mean((map(x->model(x) > τ, eachcol(d))) .== labels)
-
-            α = factorial(length(S))*factorial(length(eco.ii)-length(S)-1)/factorial(length(eco.ii))
+            α₁ = factorial(length(S)) 
+            α₂ = factorial(length(eco.ii)-length(S)-1)
+            α₃ = factorial(length(eco.ii))
+            α = α₁ * α₂ / α₃
 
             ϕ += (α * (m₍si₎ - m₍s₎))
             append!(tmp_ν, m₍si₎ - m₍s₎)
@@ -37,4 +32,12 @@ function shapley(eco::Ecosystem, model::T,
         ν[ii] = tmp_ν
     end
     return Φ, ν
+end
+
+function get_effort(data::Any, labels::Any, S::T, τ::Float64,
+        eco::Ecosystem, model::F) where {T <: AbstractVector, F <: Function}
+    idxs = map(x->eco.ii[x], S)
+    d = deepcopy(data)
+    [d[i, :] *= 0 for i=1:size(d)[1] if i ∉ idxs];
+    mean((map(x->model(x) > τ, eachcol(d))) .== labels)
 end
