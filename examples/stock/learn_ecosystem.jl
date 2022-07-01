@@ -15,8 +15,8 @@ acc = (x, y) -> mean((reduce(vcat, minibatchrun(x)) .> .5) .== y)
 
 loss = (x, y) -> Flux.huber_loss(reduce(vcat, minibatchrun(x)), y; δ=0.4)
 
-cb = () -> println("accuracy = ", acc(data, labels), 
-    " loss = ", loss(data, labels))
+cb = () -> println("accuracy = ", acc(testbatch()[1], testbatch()[2]), 
+    " loss = ", loss(testbatch()[1], testbatch()[2]))
 
 @epochs 3 Flux.Optimise.train!(
         loss, Flux.params(params_objects), repeatedly(minibatch, 1000), 

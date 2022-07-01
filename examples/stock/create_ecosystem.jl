@@ -49,9 +49,9 @@ components["hidden_dense"].model = get_model_concatdense(hidden_out_dim*4, 10)
 components["net1"].model = get_model_concatdense(11, 1)
 
 function get_model_stats()
-    d = Dense(3, 1)
+    d = Dense(2, 1)
     function get_model_stats(x)
-        d([var(x), cov(x), ([1:window ones(window)]\x)[1]])
+        d([var(x), ([1:window ones(window)]\x)[1]])
     end
     append!(params_objects, [d])
     return get_model_stats
