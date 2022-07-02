@@ -3,7 +3,7 @@ module Maen
 export create_ecosystem, model, scv, scheduling, simple_visu
 export Component, Ecosystem
 export InputAgent, HiddenAgent, NetworkAgent
-export shapley, inputs_relations_graph
+export shapley, cluster_inputs_relations
 
 abstract type AbstractComponent{T} end
 abstract type ComponentType end

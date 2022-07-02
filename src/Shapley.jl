@@ -34,7 +34,7 @@ function shapley(eco::Ecosystem, model::T,
         Φ[ii] = ϕ
         ν[ii] = tmp_ν
     end
-    return Φ, ν
+    return Φ, inputs_relations_graph(ν)
 end
 
 function get_effort(data::Any, labels::Any, S::T, τ::Float64,
@@ -51,4 +51,10 @@ function inputs_relations_graph(efforts::Dict{Int64, Vector{Float64}})
         add_edge!(g, c[1], c[2], 1/pvalue(SignedRankTest(efforts[c[1]], efforts[c[2]])))
     end
     return g
+end
+
+function cluster_inputs_relations(g::SimpleWeightedGraph{Int64, Float64})
+    α::Float64 = mapreduce(e -> e.weight, +, kruskal_mst(g))/length(vertices(g))
+    irg = SimpleWeightedGraph(length(vertices(g)))
+    map(e -> add_edge!(irg, e.src, e.dst, e.weight), filter(e -> e.weight < α,  kruskal_mst(g)))
 end
