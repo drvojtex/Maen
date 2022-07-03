@@ -14,20 +14,20 @@ function shapley(eco::Ecosystem, model::T,
     Φ = Dict{Int64, Float64}()
     ν = Dict{Int64, Vector{Float64}}()
     for ii in keys(eco.ii)
-        ϕ = 0
+        ϕ::Float64 = .0
         tmp_ν = Vector{Float64}()
         for S in N
 
-            m₍si₎ = get_effort(data, labels, S, τ, eco, model)
+            m₍si₎::Float64 = get_effort(data, labels, S, τ, eco, model)
             deleteat!(S, findall(x->x==ii, S))
-            m₍s₎ = get_effort(data, labels, S, τ, eco, model)
+            m₍s₎::Float64 = get_effort(data, labels, S, τ, eco, model)
 
-            α₁ = factorial(length(S))
-            α₂ = factorial(length(eco.ii)-length(S)-1)
-            α₃ = factorial(length(eco.ii))
-            α = α₁ * α₂ / α₃
+            γ₁::Int64 = factorial(length(S))
+            γ₂::Int64 = factorial(length(eco.ii)-length(S)-1)
+            γ₃::Int64 = factorial(length(eco.ii))
+            γ::Float64 = γ₁ * γ₂ / γ₃
 
-            ϕ += (α * (m₍si₎ - m₍s₎))
+            ϕ += (γ * (m₍si₎ - m₍s₎))
             append!(tmp_ν, m₍si₎ - m₍s₎)
 
         end
@@ -53,8 +53,9 @@ function inputs_relations_graph(efforts::Dict{Int64, Vector{Float64}})
     return g
 end
 
-function cluster_inputs_relations(g::SimpleWeightedGraph{Int64, Float64})
-    α::Float64 = mapreduce(e -> e.weight, +, kruskal_mst(g))/length(vertices(g))
+function cluster_inputs_relations(g::SimpleWeightedGraph{Int64, Float64}; α::Float64=.0)
+    α = α == .0 ? mapreduce(e -> e.weight, +, kruskal_mst(g))/length(vertices(g)) : α
     irg = SimpleWeightedGraph(length(vertices(g)))
     map(e -> add_edge!(irg, e.src, e.dst, e.weight), filter(e -> e.weight < α,  kruskal_mst(g)))
+    connected_components(irg)
 end
