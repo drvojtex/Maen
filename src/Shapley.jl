@@ -8,7 +8,7 @@ The Shapley algorithm (solution concept in cooperative game theory) for computin
 the Shapley values of a set of agents. The Shapley values are the expected 
 utility of each agent in a set.
 """ ->
-function shapley(eco::Ecosystem, model::T, 
+function ecosystem_shapley(eco::Ecosystem, model::T, 
         data::Any, labels::Any, τ::Float64) where T <: Function 
     N = collect(powerset(collect(keys(eco.ii))))
     Φ = Dict{Int64, Float64}()
@@ -18,9 +18,9 @@ function shapley(eco::Ecosystem, model::T,
         tmp_ν = Vector{Float64}()
         for S in N
 
-            m₍si₎::Float64 = get_effort(data, labels, S, τ, eco, model)
+            m₍si₎::Float64 = agent_effort(data, labels, S, τ, eco, model)
             deleteat!(S, findall(x->x==ii, S))
-            m₍s₎::Float64 = get_effort(data, labels, S, τ, eco, model)
+            m₍s₎::Float64 = agent_effort(data, labels, S, τ, eco, model)
 
             γ₁::Int64 = factorial(length(S))
             γ₂::Int64 = factorial(length(eco.ii)-length(S)-1)
@@ -34,10 +34,10 @@ function shapley(eco::Ecosystem, model::T,
         Φ[ii] = ϕ
         ν[ii] = tmp_ν
     end
-    return Φ, inputs_relations_graph(ν)
+    return Φ, inputagents_relations_graph(ν)
 end
 
-function get_effort(data::Any, labels::Any, S::T, τ::Float64,
+function agent_effort(data::Any, labels::Any, S::T, τ::Float64,
         eco::Ecosystem, model::F) where {T <: AbstractVector, F <: Function}
     idxs = map(x->eco.ii[x], S)
     d = deepcopy(data)
@@ -45,7 +45,7 @@ function get_effort(data::Any, labels::Any, S::T, τ::Float64,
     mean((map(x->model(x) > τ, eachcol(d))) .== labels)
 end
 
-function inputs_relations_graph(efforts::Dict{Int64, Vector{Float64}})
+function inputagents_relations_graph(efforts::Dict{Int64, Vector{Float64}})
     g = SimpleWeightedGraph{Int64, Float64}(length(efforts))
     for c in combinations(collect(keys(efforts)), 2)
         add_edge!(g, c[1], c[2], 1/pvalue(SignedRankTest(efforts[c[1]], efforts[c[2]])))
@@ -53,9 +53,10 @@ function inputs_relations_graph(efforts::Dict{Int64, Vector{Float64}})
     return g
 end
 
-function cluster_inputs_relations(g::SimpleWeightedGraph{Int64, Float64}; α::Float64=.0)
+function inputagents_cluster_relations(g::SimpleWeightedGraph{Int64, Float64}; α::Float64=.0)
     α = α == .0 ? mapreduce(e -> e.weight, +, kruskal_mst(g))/length(vertices(g)) : α
     irg = SimpleWeightedGraph(length(vertices(g)))
     map(e -> add_edge!(irg, e.src, e.dst, e.weight), filter(e -> e.weight < α,  kruskal_mst(g)))
     connected_components(irg)
 end
+

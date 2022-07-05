@@ -59,15 +59,25 @@ function scv(components::Dict{String, Component}, sch::Vector{Int64})
     sort(map(x->x[2], collect(components)), by=x->x.id)[sch]
 end
 
-function model(eco::Ecosystem, data)
+function model_run(eco::Ecosystem, data)
+    dims = Dict{Int64, Dict{Symbol, Tuple}}()
     values = []
     for c in eco.schc
         ids = eco.g.badjlist[c.id]
         idxs = findall(x -> x ∈ ids, eco.sch)
-        tmp = length(idxs) > 0 ? 
-            (length(idxs) == 1 ? c.model(values[idxs[1]]) : 
-                c.model(values[idxs])) : c.model(data[eco.ii[c.id]])
-        values = vcat(values, [tmp])
+        idxs = length(idxs) > 1 || length(idxs) == 0 ? idxs : idxs[1]
+        model_input = length(idxs) > 0 ? values[idxs] : data[eco.ii[c.id]]
+        model_output = c.model(model_input)
+        dims[c.id] = Dict(:in => model_input |> size, :out => model_output |> size)
+        values = vcat(values, [model_output])
     end
-    return values
+    return values, dims
+end
+
+function model(eco::Ecosystem, data)
+    return model_run(eco, data)[1]
+end
+
+function agents_dims(eco::Ecosystem, data)
+    return model_run(eco, data)[2]
 end
