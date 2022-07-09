@@ -19,11 +19,11 @@ cb = () -> println("accuracy = ", acc(testbatch()[1], testbatch()[2]),
     " loss = ", loss(testbatch()[1], testbatch()[2]))
 
 @epochs 3 Flux.Optimise.train!(
-        loss, Flux.params(params_objects), repeatedly(minibatch, 1000), 
+        loss, Flux.params(eco.ps_obj), repeatedly(minibatch, 1000), 
         ADAM(), cb = Flux.throttle(cb, 5))
 
 println("total: accuracy = ", acc(data, labels), " loss = ", loss(data, labels))
 
 JSON.print(binary_eval_report(reduce(vcat, testbatch()[2])[:,1], reduce(vcat, minibatchrun(testbatch()[1]))), 4)
 
-#bson("model.bson", ecosystem=eco, ps=params_objects)
+#bson("model.bson", ecosystem=eco)

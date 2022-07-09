@@ -58,4 +58,5 @@ function get_model_stats()
 end
 comps["stat_features"].model = get_model_stats()
 
-eco = Ecosystem(graph, sch_components, inputs_ids, sch, comps);  # create the ecosystem
+# create the ecosystem
+eco = Ecosystem(graph, sch_components, inputs_ids, sch, comps, params_objects);  

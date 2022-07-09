@@ -5,8 +5,8 @@ export Component, Ecosystem
 export InputAgent, HiddenAgent, NetworkAgent
 
 export create_ecosystem, scv, scheduling
-export model, agents_dims
-export ecosystem_shapley, inputagents_cluster_relations
+export model, subset_model
+export hiddenagents_shapley, inputagents_shapley, cluster_relations
 export simple_visu
 
 abstract type AbstractComponent{T} end

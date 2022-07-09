@@ -15,6 +15,7 @@ struct Ecosystem
     ii::Dict{Int64, Int64}
     sch::Vector{Int64}
     comps::Dict{String, Component}
+    ps_obj::Any
 end
 
 function Base.show(io::IO, a::Component)

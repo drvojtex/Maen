@@ -75,9 +75,30 @@ function model_run(eco::Ecosystem, data)
 end
 
 function model(eco::Ecosystem, data)
-    return model_run(eco, data)[1]
+    values = []
+    for c in eco.schc
+        ids = eco.g.badjlist[c.id]
+        idxs = findall(x -> x ∈ ids, eco.sch)
+        idxs = length(idxs) > 1 || length(idxs) == 0 ? idxs : idxs[1]
+        model_input = length(idxs) > 0 ? values[idxs] : data[eco.ii[c.id]]
+        model_output = c.model(model_input)
+        values = vcat(values, [model_output])
+    end
+    return values
 end
 
-function agents_dims(eco::Ecosystem, data)
-    return model_run(eco, data)[2]
+function subset_model(eco::Ecosystem, data, subset::Vector{Int64}; noise::Bool=false)
+    values = []
+    for c in eco.schc
+        ids = eco.g.badjlist[c.id]
+        idxs = findall(x -> x ∈ ids, eco.sch)
+        idxs = length(idxs) > 1 || length(idxs) == 0 ? idxs : idxs[1]
+        model_input = length(idxs) > 0 ? values[idxs] : data[eco.ii[c.id]]
+        model_output = c.model(model_input)
+        model_output = c.id ∈ subset ? model_output : (
+            noise ? model_output .* randn(Float32, size(model_output)) : model_output .* Float32(.0)
+        )
+        values = vcat(values, [model_output])
+    end
+    return values
 end
