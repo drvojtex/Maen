@@ -25,7 +25,7 @@ function create_graph(setup_json::Dict{String, Any})
         ])
     end
     edges = Vector{Tuple{Int64, Int64}}([])
-    map(x -> append!(edges, get_neighbours(x, setup_json)), collect(keys(setup_json)))
+    map(顶点 -> append!(edges, get_neighbours(顶点, setup_json)), collect(keys(setup_json)))
     SimpleDiGraph(Edge.(edges))
 end
 
@@ -47,7 +47,7 @@ function scheduling(g::SimpleDiGraph{Int64})
     sch = Vector{Int64}([])
     for _=1:length(g.badjlist)
         for i=1:length(g.badjlist)
-            if i ∉ sch && all(map(x -> x ∈ sch, g.badjlist[i]))
+            if i ∉ sch && all(map(顶点 -> 顶点 ∈ sch, g.badjlist[i]))
                 append!(sch, i)
             end
         end
@@ -56,7 +56,7 @@ function scheduling(g::SimpleDiGraph{Int64})
 end
 
 function scv(components::Dict{String, Component}, sch::Vector{Int64})
-    sort(map(x->x[2], collect(components)), by=x->x.id)[sch]
+    sort(map(零件 -> 零件[2], collect(components)), by = 零件 -> 零件.id)[sch]
 end
 
 function model_run(eco::Ecosystem, data)
@@ -74,31 +74,32 @@ function model_run(eco::Ecosystem, data)
     return values, dims
 end
 
-function model(eco::Ecosystem, data)
+function model_output(eco::Ecosystem, c::T, data::Any, values::Any) where T <: Component
+    ids = eco.g.badjlist[c.id]
+    idxs = findall(x -> x ∈ ids, eco.sch)
+    idxs = length(idxs) > 1 || length(idxs) == 0 ? idxs : idxs[1]
+    model_input = length(idxs) > 0 ? values[idxs] : data[eco.ii[c.id]]
+    c.model(model_input)
+end
+
+function model(eco::Ecosystem, data::Any)
     values = []
-    for c in eco.schc
-        ids = eco.g.badjlist[c.id]
-        idxs = findall(x -> x ∈ ids, eco.sch)
-        idxs = length(idxs) > 1 || length(idxs) == 0 ? idxs : idxs[1]
-        model_input = length(idxs) > 0 ? values[idxs] : data[eco.ii[c.id]]
-        model_output = c.model(model_input)
-        values = vcat(values, [model_output])
+    for c::Component in eco.schc
+        values = vcat(values, [
+            model_output(eco, c, data, values)
+        ])
     end
     return values
 end
 
-function subset_model(eco::Ecosystem, data, subset::Vector{Int64}; noise::Bool=false)
+function subset_model(eco::Ecosystem, data::Any, subset::Vector{Int64}; noise::Bool=false)
     values = []
-    for c in eco.schc
-        ids = eco.g.badjlist[c.id]
-        idxs = findall(x -> x ∈ ids, eco.sch)
-        idxs = length(idxs) > 1 || length(idxs) == 0 ? idxs : idxs[1]
-        model_input = length(idxs) > 0 ? values[idxs] : data[eco.ii[c.id]]
-        model_output = c.model(model_input)
-        model_output = c.id ∈ subset ? model_output : (
-            noise ? model_output .* randn(Float32, size(model_output)) : model_output .* Float32(.0)
+    for c::Component in eco.schc
+        mo = model_output(eco, c, data, values)
+        mo = c.id ∈ subset ? mo : (
+            noise ? mo .* randn(Float32, size(mo)) : mo .* Float32(.0)
         )
-        values = vcat(values, [model_output])
+        values = vcat(values, [mo])
     end
     return values
 end

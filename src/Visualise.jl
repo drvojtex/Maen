@@ -18,3 +18,25 @@ function simple_visu(g::AbstractGraph, c::Dict{String, Component})
     #savefig(graphplot(g, names=map(x->x.model, comps), markercolor=colors), path)
     graphplot(g, names=map(x->x[1], comps), markercolor=colors)
 end
+
+#=
+
+using Erdos
+
+g = DiNetwork(5)
+add_edge!(g, 1, 2)
+add_edge!(g, 1, 3)
+add_edge!(g, 3, 4)
+add_edge!(g, 4, 5)
+vprop!(g, "label", VertexMap(g, ["input1", "h1", "h2", "h3", "net"]));
+colors = [
+    :([fill "#ff2222" targetArrow "standard"]),
+    :([fill "#2222ff" targetArrow "standard"]),
+    :([fill "#2222ff" targetArrow "standard"]),
+    :([fill "#2222ff" targetArrow "standard"]),
+    :([fill "#22ff22" targetArrow "standard"]),
+]
+vprop!(g, "graphics", VertexMap(g, colors))
+writenetwork("mygraph.gml", g)
+
+=#

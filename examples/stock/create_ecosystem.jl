@@ -1,7 +1,7 @@
 
 using Maen, Flux
 
-println("Creating ecosystem...")
+@info "Creating ecosystem..."
 
 graph, comps = create_ecosystem("setup.json");  # create the ecosystem graph and components
 sch = scheduling(graph);  # find scheduling order
