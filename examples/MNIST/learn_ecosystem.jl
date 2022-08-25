@@ -1,11 +1,10 @@
 
 using Maen
+using MLDatasets
 using StatsBase, Statistics, IterTools, MLDataPattern
-using Flux, EvalMetrics
-using Flux: @epochs
-using BSON, JSON
+using EvalMetrics, Flux, Flux: @epochs
+using JSON
 
-#map(x->x[1].=x[2], zip(model_params, ecosystem[:model_params]))
 
 @info "Training..."
 
@@ -25,5 +24,3 @@ cb = () -> println("accuracy = ", acc(testbatch()[1], testbatch()[2]),
 println("total: accuracy = ", acc(data, labels), " loss = ", loss(data, labels))
 
 JSON.print(binary_eval_report(reduce(vcat, testbatch()[2])[:,1], reduce(vcat, minibatchrun(testbatch()[1]))), 4)
-
-#bson("model.bson", ecosystem=eco)
