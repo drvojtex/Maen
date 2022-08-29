@@ -1,0 +1,21 @@
+{
+    "in": {
+        "id": 1,
+        "type": "InputAgent",
+        "target": [
+            "hidden"
+        ]
+    },
+    "hidden": {
+        "id": 2,
+        "type": "HiddenAgent",
+        "target": [
+            "net"
+        ]
+    },
+    "net": {
+        "id": 3,
+        "type": "NetworkAgent",
+        "target": []
+    }
+}

@@ -1,68 +1,68 @@
 {
-    "mapping_0": {
+    "in_0": {
         "id": 1,
         "type": "InputAgent",
         "target": [
             "hidden_0"
         ]
     },
-    "mapping_1": {
+    "in_1": {
         "id": 2,
         "type": "InputAgent",
         "target": [
             "hidden_1"
         ]
     },
-    "mapping_2": {
+    "in_2": {
         "id": 3,
         "type": "InputAgent",
         "target": [
             "hidden_2"
         ]
     },
-    "mapping_3": {
+    "in_3": {
         "id": 4,
         "type": "InputAgent",
         "target": [
             "hidden_3"
         ]
     },
-    "mapping_4": {
+    "in_4": {
         "id": 5,
         "type": "InputAgent",
         "target": [
             "hidden_4"
         ]
     },
-    "mapping_5": {
+    "in_5": {
         "id": 6,
         "type": "InputAgent",
         "target": [
             "hidden_5"
         ]
     },
-    "mapping_6": {
+    "in_6": {
         "id": 7,
         "type": "InputAgent",
         "target": [
             "hidden_6"
         ]
     },
-    "mapping_7": {
+    "in_7": {
         "id": 8,
         "type": "InputAgent",
         "target": [
             "hidden_7"
         ]
     },
-    "mapping_8": {
+    "in_8": {
         "id": 9,
         "type": "InputAgent",
         "target": [
             "hidden_8"
         ]
     },
-    "mapping_9": {
+    "in_9": {
         "id": 10,
         "type": "InputAgent",
         "target": [
