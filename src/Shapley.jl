@@ -2,6 +2,7 @@
 using Combinatorics, StatsBase
 using Graphs, SimpleWeightedGraphs
 using HypothesisTests
+using ThreadTools
 
 
 @doc """
@@ -17,7 +18,9 @@ function shapley(eco::Ecosystem, data::Any, labels::Any, τ::Float64,
     Φ = Dict{Int64, Float64}()
     ν = Dict{Int64, Vector{Float64}}()
 
+    @show ids
     for cid in ids
+        @show cid
         ϕ::Float64 = .0
         tmp_ν = Vector{Float64}()
         for S in N 
@@ -30,12 +33,12 @@ function shapley(eco::Ecosystem, data::Any, labels::Any, τ::Float64,
             # TODO: argmax vs treshold
 
             m₍si₎::Float64 = mean(
-                (map(x -> argmax(subset_model(
+                (tmap(x -> argmax(subset_model(
                     eco, x, S, noise=noise_method)[end])-1, data)) .== labels
             )
             setdiff!(S, cid)
             m₍s₎::Float64 = mean(
-                (map(x -> argmax(subset_model(
+                (tmap(x -> argmax(subset_model(
                     eco, x, S, noise=noise_method)[end])-1, data)) .== labels
             )
 
