@@ -10,7 +10,7 @@ the Shapley values of a set of agents. The Shapley values are the expected
 utility of each agent in a set.
 """ ->
 function shapley(eco::Ecosystem, data::Any, labels::Any, τ::Float64, 
-    ids::Vector{Int64}; noise_method::Bool=true)
+    ids::Vector{Int64}, noise_method::Bool)
 
     all_ids::Vector{Int64} = map(x->x.id, values(eco.comps))
     N::Vector{Vector{Int64}} = collect(powerset(ids))[2:end]
