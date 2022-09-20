@@ -1,0 +1,161 @@
+{
+    "hidden_2": {
+        "id": 14,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_0": {
+        "id": 1,
+        "target": [
+            "hidden_0"
+        ],
+        "type": "InputAgent"
+    },
+    "in_9": {
+        "id": 10,
+        "target": [
+            "hidden_9"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_10": {
+        "id": 22,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_4": {
+        "id": 16,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_7": {
+        "id": 8,
+        "target": [
+            "hidden_7"
+        ],
+        "type": "InputAgent"
+    },
+    "in_1": {
+        "id": 2,
+        "target": [
+            "hidden_1"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_0": {
+        "id": 12,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "net": {
+        "id": 23,
+        "target": [],
+        "type": "NetworkAgent"
+    },
+    "hidden_8": {
+        "id": 20,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_4": {
+        "id": 5,
+        "target": [
+            "hidden_4"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_6": {
+        "id": 18,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_3": {
+        "id": 15,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_3": {
+        "id": 4,
+        "target": [
+            "hidden_3"
+        ],
+        "type": "InputAgent"
+    },
+    "in_5": {
+        "id": 6,
+        "target": [
+            "hidden_5"
+        ],
+        "type": "InputAgent"
+    },
+    "in_8": {
+        "id": 9,
+        "target": [
+            "hidden_8"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_9": {
+        "id": 21,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_7": {
+        "id": 19,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_2": {
+        "id": 3,
+        "target": [
+            "hidden_2"
+        ],
+        "type": "InputAgent"
+    },
+    "in_6": {
+        "id": 7,
+        "target": [
+            "hidden_6"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_1": {
+        "id": 13,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_10": {
+        "id": 11,
+        "target": [
+            "hidden_10"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_5": {
+        "id": 17,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    }
+}

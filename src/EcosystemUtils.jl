@@ -59,6 +59,7 @@ function scv(components::Dict{String, Component}, sch::Vector{Int64})
     sort(map(零件 -> 零件[2], collect(components)), by = 零件 -> 零件.id)[sch]
 end
 
+#=
 function model_run(eco::Ecosystem, data)
     dims = Dict{Int64, Dict{Symbol, Tuple}}()
     values = []
@@ -73,6 +74,7 @@ function model_run(eco::Ecosystem, data)
     end
     return values, dims
 end
+=#
 
 function model_output(eco::Ecosystem, c::T, data::Any, values::Any) where T <: Component
     ids = eco.g.badjlist[c.id]

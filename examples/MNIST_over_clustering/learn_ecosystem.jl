@@ -36,7 +36,7 @@ cb = () -> println("accuracy = ", acc(testbatch()[1], testbatch()[2]),
 
 @epochs 10 Flux.Optimise.train!(
             loss, Flux.params(eco.ps_obj), repeatedly(minibatch, 300), 
-            ADAM(0.0001), cb = Flux.throttle(cb, 4)
+            ADAM(0.001), cb = Flux.throttle(cb, 4)
         )
 
 println("total train: accuracy = ", acc(data_x, data_y), " loss = ", loss(data_x, y))
