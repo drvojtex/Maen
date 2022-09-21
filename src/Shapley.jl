@@ -23,7 +23,10 @@ function shapley(eco::Ecosystem, data::Any, labels::Any, τ::Float64,
         @show cid
         ϕ::Float64 = .0
         tmp_ν = Vector{Float64}()
+        incr = 0
         for S in N 
+            incr+=1
+            @show incr
             
             S = deepcopy(S)
             λ = length(setdiff(S, cid))
