@@ -24,7 +24,7 @@ function shapley(eco::Ecosystem, data::Any, labels::Any, τ::Float64,
         ϕ::Float64 = .0
         tmp_ν = Vector{Float64}()
         
-        for S in ProgressBars(N) 
+        for S in ProgressBar(N) 
             
             S = deepcopy(S)
             λ = length(setdiff(S, cid))
