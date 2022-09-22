@@ -19,7 +19,7 @@ function shapley(eco::Ecosystem, data::Any, labels::Any, τ::Float64,
     ν = Dict{Int64, Vector{Float64}}()
 
     for cid in ids
-        @printf "\rcid %d (idx: %d), length of ids: %d" cid findall(x->x==cid, ids)[1] length(ids)
+        @printf "cid %d (idx: %d), length of ids: %d\n" cid findall(x->x==cid, ids)[1] length(ids)
 
         ϕ::Float64 = .0
         tmp_ν = Vector{Float64}()
