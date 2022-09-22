@@ -2,7 +2,7 @@
 using Combinatorics, StatsBase
 using Graphs, SimpleWeightedGraphs
 using HypothesisTests
-using ThreadTools
+using ThreadTools, ProgressBars, Printf
 
 
 @doc """
@@ -18,15 +18,13 @@ function shapley(eco::Ecosystem, data::Any, labels::Any, τ::Float64,
     Φ = Dict{Int64, Float64}()
     ν = Dict{Int64, Vector{Float64}}()
 
-    @show ids
     for cid in ids
-        @show cid
+        @printf "\rcid %d (idx: %d), length of ids: %d" cid findall(x->x==cid, ids)[1] length(ids)
+
         ϕ::Float64 = .0
         tmp_ν = Vector{Float64}()
-        incr = 0
-        for S in N 
-            incr+=1
-            @show incr
+        
+        for S in ProgressBars(N) 
             
             S = deepcopy(S)
             λ = length(setdiff(S, cid))
