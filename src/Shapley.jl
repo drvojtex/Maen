@@ -71,7 +71,7 @@ function hiddenagents_shapley(eco::Ecosystem, data::Any, labels::Any, s_model::F
 end
 
 @doc """
-Compute shapley values for input agents based on given data. 
+Compute shapley values for input agents based on given data.
 
 julia> inputagents_shapley(eco, data, labels, 
     (eco, x, S) -> argmax(subset_model(eco, x, S, noise=false)[end]) - 1
