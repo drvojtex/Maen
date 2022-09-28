@@ -28,4 +28,3 @@ minibatchrun = (x) -> map(d->model(d), x)
 acc = (x, y) -> mean(argmax.(minibatchrun(x)).-1 .== y)
 
 eco = BSON.load("trn_eco_louvain.bson")[:eco];
-

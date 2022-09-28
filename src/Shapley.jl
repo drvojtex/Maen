@@ -71,7 +71,7 @@ function hiddenagents_shapley(eco::Ecosystem, data::Any, labels::Any, s_model::F
 end
 
 @doc """
-julia> hiddenagents_shapley(eco, data, labels, 
+julia> inputagents_shapley(eco, data, labels, 
     (eco, x, S) -> argmax(subset_model(eco, x, S, noise=false)[end]) - 1
 )
 """ ->
