@@ -5,17 +5,6 @@ using HypothesisTests
 using ThreadTools, ProgressBars, Printf
 
 
-@doc """
-The Shapley algorithm (solution concept in cooperative game theory) for computing 
-the Shapley values of a set of agents. The Shapley values are the expected 
-utility of each agent in a set.
-
-julia> shapley(
-    eco, data, labels, ids, (x, S) -> argmax(
-    subset_model(eco, x, S, noise=true)[end]) - 1
-)
-
-""" ->
 function shapley(eco::Ecosystem, data::Any, labels::Any, 
     ids::Vector{Int64}, s_model::Function)
 
@@ -60,32 +49,12 @@ function shapley(eco::Ecosystem, data::Any, labels::Any,
     return Φ, relations_graph(ν)
 end
 
-@doc """
-julia> hiddenagents_shapley(eco, data, labels, 
-    (eco, x, S) -> argmax(subset_model(eco, x, S, noise=true)[end]) - 1
-)
-""" ->
 function hiddenagents_shapley(eco::Ecosystem, data::Any, labels::Any, s_model::Function)
     ids = map(x->x.id, filter(x->typeof(x).parameters[1]==HiddenAgent, collect(values(eco.comps))))
     return shapley(eco, data, labels, ids, (x, S) -> s_model(eco, x, S))
 end
 
-@doc """
-Compute shapley values for input agents based on given data. 
-
-julia> inputagents_shapley(eco, data, labels, 
-    (eco, x, S) -> argmax(subset_model(eco, x, S, noise=false)[end]) - 1
-)
-""" ->
-function inputagents_shapley(eco::Ecosystem, data::Any, labels::Any)
+function inputagents_shapley(eco::Ecosystem, data::Any, labels::Any, s_model::Function)
     ids = map(x->x.id, filter(x->typeof(x).parameters[1]==InputAgent, collect(values(eco.comps))))
     return shapley(eco, data, labels, ids, (x, S) -> s_model(eco, x, S))
-end
-
-function relations_graph(efforts::Dict{Int64, Vector{Float64}})
-    g = SimpleWeightedGraph{Int64, Float64}(length(efforts))
-    for c in combinations(collect(keys(efforts)), 2)
-        add_edge!(g, c[1], c[2], pvalue(SignedRankTest(efforts[c[1]], efforts[c[2]])))
-    end
-    return g
 end

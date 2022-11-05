@@ -3,6 +3,7 @@ using Flux, Zygote
 using AbstractDifferentiation, NumericalIntegration
 using ProgressBars
 
+
 ∂m(m::Function, x::Any) = map(d -> abs.(d), AD.gradient(AD.ZygoteBackend(), m, x)[1])
 ∂x(m::Function, x::Any) = mapreduce(样本->∂m(m, 样本), .+, eachcol(x)) 
 
