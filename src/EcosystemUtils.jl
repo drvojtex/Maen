@@ -12,7 +12,7 @@ function create_ecosystem(xgml::String)
     # Create the ecosystem components
     comps::Dict{String, Component} = create_components(net, g)
     # Find the scheduling order
-    sch = scheduling(graph)
+    sch = scheduling(g)
     # Vector of scheduled components
     sch_components = scv(comps, sch)
 
