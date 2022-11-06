@@ -4,13 +4,13 @@ using BSON, JSON
 using Flux, Zygote
 
 
-function create_ecosystem(sf::String)
-    # Load the setup file
-    sj::Dict{String, Any} = JSON.parsefile(sf)
+function create_ecosystem(xgml::String)
+    # Parse the setup xgml to the Network
+    net::Network = xgml2network(xgml)
     # Create the ecosystem graph
-    g::SimpleDiGraph{Int64} = create_graph(sj)
+    g::SimpleDiGraph{Int64} = create_graph(net)
     # Create the ecosystem components
-    comps::Dict{String, Component} = create_components(sj, g)
+    comps::Dict{String, Component} = create_components(net, g)
     # Find the scheduling order
     sch = scheduling(graph)
     # Vector of scheduled components
@@ -19,26 +19,22 @@ function create_ecosystem(sf::String)
     return Ecosystem(g, sch_components, Dict(), sch, comps, Flux.params([]))
 end
 
-function create_graph(setup_json::Dict{String, Any})
-    function get_neighbours(name::String, j::Dict{String, Any}) 
-        ns::Vector{String} = j[name]["target"]
-        return Vector{Tuple{Int64, Int64}}([
-            (j[name]["id"], j[x]["id"]) for x in ns if haskey(j, x)
-        ])
+function create_graph(net::Network)
+    g::SimpleDiGraph = SimpleDiGraph(length(net.ids))
+    for s::Int64 in keys(net.adjacency_list)
+        map(t::Int64 -> add_edge!(g, s, t), net.adjacency_list[s])
     end
-    edges = Vector{Tuple{Int64, Int64}}([])
-    map(顶点 -> append!(edges, get_neighbours(顶点, setup_json)), collect(keys(setup_json)))
-    SimpleDiGraph(Edge.(edges))
+    return g
 end
 
-function create_components(setup_json::Dict{String, Any}, graph::SimpleDiGraph{Int64})
+function create_components(net::Network, graph::SimpleDiGraph{Int64})
     components = Dict{String, Component}()
-    for sj in setup_json
-        name = sj[1]
-        copmt = sj[2]
-        components[name] = Component{eval(Symbol(copmt["type"]))}(
-            copmt["id"], name, 
-            length(graph.badjlist[copmt["id"]]) > 1 ? (x...) -> sum(x...) : identity, 0.0
+    for id::Int64 in net.ids
+        type::String = net.types[id]
+        name::String = net.names[id]
+        components[name] = Component{eval(Symbol(type))}(
+            id, name, 
+            length(graph.badjlist[id]) > 1 ? (x...) -> sum(x...) : identity, 0.0
         )
     end
     return components

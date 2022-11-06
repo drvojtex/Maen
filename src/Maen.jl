@@ -2,7 +2,7 @@
 module Maen
 
 export Component, Ecosystem
-export InputAgent, HiddenAgent, NetworkAgent
+export InputAgent, HiddenAgent, OutputAgent
 
 export create_ecosystem, scv, scheduling
 export model, subset_model
@@ -13,14 +13,16 @@ abstract type AbstractComponent{T} end
 abstract type ComponentType end
 abstract type InputAgent <: ComponentType end
 abstract type HiddenAgent <: ComponentType end
-abstract type NetworkAgent <: ComponentType end
+abstract type OutputAgent <: ComponentType end
 
 include("EcosystemStructs.jl")
+include("ParseXGML.jl")
 include("EcosystemUtils.jl")
 include("Shapley.jl")
 include("Intergrads.jl")
 
 include("../docs/EcosystemUtils.jl")
+include("ParseXGML.jl")
 include("../docs/Intergrads.jl")
 include("../docs/Shapley.jl")
 

@@ -4,22 +4,22 @@ using DocumentFunction
 @doc """
 $(DocumentFunction.documentfunction(create_ecosystem;
     location=false,
-    maintext="Compute importnce of the input data parts by the intergrads method. Returns Ecosystem struct.",
-    argtext=Dict("sf"=>"path to the configuration JSON")))
+    maintext="Create the Ecosystem struct from the xgml setup file.",
+    argtext=Dict("sf"=>"path to the configuration XGML created in yEd editor")))
 """ create_ecosystem
 
 @doc """
 $(DocumentFunction.documentfunction(create_graph;
     location=false,
-    maintext="Compute importnce of the input data parts by the intergrads method.",
-    argtext=Dict("setup_json"=>"path to the configuration JSON")))
+    maintext="Create graph in Graphs representation from the Network struct.",
+    argtext=Dict("net"=>"Network struct")))
 """ create_graph
 
 @doc """
 $(DocumentFunction.documentfunction(create_components;
     location=false,
     maintext="Create components structures.",
-    argtext=Dict("setup_json"=>"path to the configuration JSON",
+    argtext=Dict("net"=>"Network struct",
                  "graph"=>"graph of components connections")))
 """ create_components
 
