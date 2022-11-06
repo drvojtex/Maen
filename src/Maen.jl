@@ -22,7 +22,7 @@ include("Shapley.jl")
 include("Intergrads.jl")
 
 include("../docs/EcosystemUtils.jl")
-include("ParseXGML.jl")
+include("../docs/ParseXGML.jl")
 include("../docs/Intergrads.jl")
 include("../docs/Shapley.jl")
 

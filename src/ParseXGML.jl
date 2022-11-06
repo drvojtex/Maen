@@ -3,6 +3,7 @@ using LibExpat
 
 function xgml2network(path::String)
     net::Network = Network()
+    
     f::IOStream = open(path, "r")
     xgml::ETree = LibExpat.xp_parse(read(f, String))
     close(f)
@@ -31,6 +32,6 @@ function xgml2network(path::String)
         ][1])
         dict_append!(net.adjacency_list, source+1, target+1)
     end
-
+    
     return net
 end
