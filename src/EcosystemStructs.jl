@@ -63,7 +63,7 @@ function Base.show(io::IO, a::Component)
             :id => string(a.id),
             :name => a.name,
             :type => typeof(a).parameters[1],
-            :shapley => hasproperty(a, :shapley) ? a.importance : Nothing
+            :importance => hasproperty(a, :importance) ? a.importance : Nothing
         ), 4)
     )
 end
