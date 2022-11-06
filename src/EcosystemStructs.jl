@@ -41,7 +41,7 @@ The struct of the neural network ecosystem.
 
 $(FIELDS)
 """
-struct Ecosystem
+mutable struct Ecosystem
     "Graph which defines the connection of components."
     g::SimpleDiGraph{Int64}
     "Scheduled components - order of propagation trought the model schema."
