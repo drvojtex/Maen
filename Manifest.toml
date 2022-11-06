@@ -663,6 +663,12 @@ uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
 
+[[deps.LibExpat]]
+deps = ["Expat_jll", "Pkg"]
+git-tree-sha1 = "27dc51f94ceb107fd53b367431a638b430e01e81"
+uuid = "522f3ed2-3f36-55e3-b6df-e94fee9b0c07"
+version = "0.6.1"
+
 [[deps.LibGit2]]
 deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
@@ -1144,9 +1150,9 @@ version = "0.1.15"
 
 [[deps.Static]]
 deps = ["IfElse"]
-git-tree-sha1 = "de4f0a4f049a4c87e4948c04acff37baf1be01a6"
+git-tree-sha1 = "03170c1e8a94732c1d835ce4c5b904b4b52cba1c"
 uuid = "aedffcd0-7271-4cad-89d0-dc628f76c6d3"
-version = "0.7.7"
+version = "0.7.8"
 
 [[deps.StaticArrays]]
 deps = ["LinearAlgebra", "Random", "StaticArraysCore", "Statistics"]
