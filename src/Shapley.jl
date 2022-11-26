@@ -46,7 +46,7 @@ function shapley(eco::Ecosystem, data::Any, labels::Any,
         Φ[cid] = ϕ
         ν[cid] = tmp_ν
     end
-    return Φ, relations_graph(ν)
+    return Φ
 end
 
 function hiddenagents_shapley(eco::Ecosystem, data::Any, labels::Any, s_model::Function)
