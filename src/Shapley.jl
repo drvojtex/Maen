@@ -6,7 +6,7 @@ using ThreadTools, ProgressBars, Printf
 
 
 function shapley(eco::Ecosystem, data::Any, labels::Any, 
-    ids::Vector{Int64}, s_model::Function)
+    ids::Vector{Int64}, subsec_acc::Function)
 
     all_ids::Vector{Int64} = map(x->x.id, values(eco.comps))
     N::Vector{Vector{Int64}} = collect(powerset(ids))[2:end]
@@ -26,13 +26,9 @@ function shapley(eco::Ecosystem, data::Any, labels::Any,
 
             union!(S, setdiff(all_ids, ids))
 
-            m₍si₎::Float64 = mean(
-                (tmap(x -> s_model(x, S), data)) .== labels
-            )
+            m₍si₎::Float64 = subsec_acc(S, data, labels)
             setdiff!(S, cid)
-            m₍s₎::Float64 = mean(
-                (tmap(x -> s_model(x, S), data)) .== labels
-            )
+            m₍s₎::Float64 = subsec_acc(S, data, labels)
 
             γ₁::Int64 = factorial(λ)
             γ₂::Int64 = factorial(length(ids)-λ-1)
@@ -49,12 +45,12 @@ function shapley(eco::Ecosystem, data::Any, labels::Any,
     return Φ
 end
 
-function hiddenagents_shapley(eco::Ecosystem, data::Any, labels::Any, s_model::Function)
+function hiddenagents_shapley(eco::Ecosystem, data::Any, labels::Any, subsec_acc::Function)
     ids = map(x->x.id, filter(x->typeof(x).parameters[1]==HiddenAgent, collect(values(eco.comps))))
-    return shapley(eco, data, labels, ids, (x, S) -> s_model(eco, x, S))
+    return shapley(eco, data, labels, ids, (S, d, l) -> subsec_acc(S, d, l))
 end
 
-function inputagents_shapley(eco::Ecosystem, data::Any, labels::Any, s_model::Function)
+function inputagents_shapley(eco::Ecosystem, data::Any, labels::Any, subsec_acc::Function)
     ids = map(x->x.id, filter(x->typeof(x).parameters[1]==InputAgent, collect(values(eco.comps))))
-    return shapley(eco, data, labels, ids, (x, S) -> s_model(eco, x, S))
+    return shapley(eco, data, labels, ids, (S, d, l) -> subsec_acc(S, d, l))
 end
