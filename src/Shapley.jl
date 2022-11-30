@@ -19,12 +19,13 @@ function shapley(all_ids::Vector{Int64}, ids::Vector{Int64}, subset_acc::Functio
         ))[2:end]
         
         for S in ProgressBar(N) 
+
+            λ::Int64 = length(S)
             union!(S, setdiff(all_ids, ids))
 
             m₍si₎::Float64 = subset_acc(union(S, cid))
             m₍s₎::Float64 = subset_acc(S)
 
-            λ::Int64 = length(S)
             γ₁::Int64 = factorial(λ)
             γ₂::Int64 = factorial(length(ids)-λ-1)
             γ₃::Int64 = factorial(length(ids))
