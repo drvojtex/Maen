@@ -10,15 +10,12 @@ $(DocumentFunction.documentfunction(shapley;
     utility of each agent in a set.
 
     julia> shapley(
-        eco, data, labels, ids, (x, S) -> argmax(
-        subset_model(eco, x, S, noise=true)[end]) - 1
+        all_ids, ids, (S, data, labels) -> subsec_acc(S, data, labels)
     )
     ",
-    argtext=Dict("eco"=>"neural network ecosystem",
-                 "data"=>"input data of the network",
-                 "labels"=>"labels corresponding to the data",
+    argtext=Dict("all_ids"=>"identifiers of all components in the ecosystem",
                  "ids"=>"identifiers of components to be computed shapley values",
-                 "s_model"=>"subset model with defined output format")))
+                 "subset_acc"=>"subset model with defined output format")))
 """ shapley
 
 @doc """
@@ -27,14 +24,14 @@ $(DocumentFunction.documentfunction(hiddenagents_shapley;
     maintext="
     Compute Shapley values of hiddent agents components.
 
-    julia> hiddenagents_shapley(eco, data, labels, 
-        (eco, x, S) -> argmax(subset_model(eco, x, S, noise=true)[end]) - 1
+    julia> hiddenagents_shapley(
+        eco, data, labels, ids, (S, data, labels) -> subsec_acc(S, data, labels)
     )
     ",
     argtext=Dict("eco"=>"neural network ecosystem",
                  "data"=>"input data of the network",
                  "labels"=>"labels corresponding to the data",
-                 "s_model"=>"subset model with defined output format")))
+                 "subset_acc"=>"subset model with defined output format")))
 """ hiddenagents_shapley
 
 @doc """
@@ -43,12 +40,12 @@ $(DocumentFunction.documentfunction(inputagents_shapley;
     maintext="
     Compute Shapley values of input agents components.
 
-    julia> hiddenagents_shapley(eco, data, labels, 
-        (eco, x, S) -> argmax(subset_model(eco, x, S, noise=true)[end]) - 1
+    julia> hiddenagents_shapley(
+        eco, data, labels, ids, (S, data, labels) -> subset_acc(S, data, labels)
     )
     ",
     argtext=Dict("eco"=>"neural network ecosystem",
                  "data"=>"input data of the network",
                  "labels"=>"labels corresponding to the data",
-                 "s_model"=>"subset model with defined output format")))
+                 "subset_acc"=>"subset model with defined output format")))
 """ inputagents_shapley
