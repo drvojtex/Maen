@@ -5,7 +5,19 @@ using HypothesisTests
 using ThreadTools, ProgressBars, Printf
 
 
-function shapley(all_ids::Vector{Int64}, ids::Vector{Int64}, subset_acc::Function)
+function generate_powerset(ids::Vector{Int64}, cid::Int64; mc::Bool=false)
+    if mc
+        mapping = Dict{Int64, Int64}(1:length(ids) .=> ids)
+        N::Vector{Vector{Int64}} = generate_subsets(
+            length(ids), (log(ℯ, 2^(length(ids)-1)+1))^2, cid
+        )
+        return map(x -> mapping.(x), N)
+    else
+        return collect(powerset(setdiff(ids, cid)))[2:end]
+    end
+end
+
+function shapley(all_ids::Vector{Int64}, ids::Vector{Int64}, subset_acc::Function; mc::Bool=false)
 
     shap = Dict{Int64, Float64}()
 
@@ -14,9 +26,7 @@ function shapley(all_ids::Vector{Int64}, ids::Vector{Int64}, subset_acc::Functio
 
         ϕ::Float64 = .0
 
-        N::Vector{Vector{Int64}} = collect(powerset(
-            setdiff(ids, cid)
-        ))[2:end]
+        N::Vector{Vector{Int64}} = generate_powerset(ids, cid, mc=mc)
         
         for S in ProgressBar(N) 
 
@@ -38,12 +48,12 @@ function shapley(all_ids::Vector{Int64}, ids::Vector{Int64}, subset_acc::Functio
     return shap
 end
 
-function hiddenagents_shapley(eco::Ecosystem, data::Any, labels::Any, subset_acc::Function)
+function hiddenagents_shapley(eco::Ecosystem, data::Any, labels::Any, subset_acc::Function; monteCarlo::Bool=false)
     ids::Vector{Int64} = map(x->x.id, filter(x->typeof(x).parameters[1]==HiddenAgent, collect(values(eco.comps))))
-    shapley(map(x->x.id, values(eco.comps)), ids, (S) -> subset_acc(S, data, labels))
+    shapley(map(x->x.id, values(eco.comps)), ids, (S) -> subset_acc(S, data, labels), mc=monteCarlo)
 end
 
-function inputagents_shapley(eco::Ecosystem, data::Any, labels::Any, subset_acc::Function)
+function inputagents_shapley(eco::Ecosystem, data::Any, labels::Any, subset_acc::Function; monteCarlo::Bool=false)
     ids::Vector{Int64} = map(x->x.id, filter(x->typeof(x).parameters[1]==InputAgent, collect(values(eco.comps))))
-    shapley(map(x->x.id, values(eco.comps)), ids, (S) -> subset_acc(S, data, labels))
+    shapley(map(x->x.id, values(eco.comps)), ids, (S) -> subset_acc(S, data, labels), mc=monteCarlo)
 end

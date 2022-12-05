@@ -18,12 +18,14 @@ abstract type OutputAgent <: ComponentType end
 include("EcosystemStructs.jl")
 include("ParseXGML.jl")
 include("EcosystemUtils.jl")
+include("ShapleyMonteCarlo.jl")
 include("Shapley.jl")
 include("Intergrads.jl")
 
 include("../docs/EcosystemUtils.jl")
 include("../docs/ParseXGML.jl")
 include("../docs/Intergrads.jl")
+include("../docs/ShapleyMonteCarlo.jl")
 include("../docs/Shapley.jl")
 
 end # module
