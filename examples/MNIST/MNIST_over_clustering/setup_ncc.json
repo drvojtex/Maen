@@ -1,0 +1,539 @@
+{
+    "hidden_16": {
+        "id": 55,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_12": {
+        "id": 13,
+        "target": [
+            "hidden_12"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_22": {
+        "id": 61,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_27": {
+        "id": 66,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_17": {
+        "id": 18,
+        "target": [
+            "hidden_17"
+        ],
+        "type": "InputAgent"
+    },
+    "in_4": {
+        "id": 5,
+        "target": [
+            "hidden_4"
+        ],
+        "type": "InputAgent"
+    },
+    "in_3": {
+        "id": 4,
+        "target": [
+            "hidden_3"
+        ],
+        "type": "InputAgent"
+    },
+    "in_8": {
+        "id": 9,
+        "target": [
+            "hidden_8"
+        ],
+        "type": "InputAgent"
+    },
+    "in_19": {
+        "id": 20,
+        "target": [
+            "hidden_19"
+        ],
+        "type": "InputAgent"
+    },
+    "in_16": {
+        "id": 17,
+        "target": [
+            "hidden_16"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_25": {
+        "id": 64,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_26": {
+        "id": 65,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_35": {
+        "id": 74,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_23": {
+        "id": 62,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_15": {
+        "id": 16,
+        "target": [
+            "hidden_15"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_19": {
+        "id": 58,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_0": {
+        "id": 1,
+        "target": [
+            "hidden_0"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_10": {
+        "id": 49,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_7": {
+        "id": 8,
+        "target": [
+            "hidden_7"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_11": {
+        "id": 50,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_1": {
+        "id": 2,
+        "target": [
+            "hidden_1"
+        ],
+        "type": "InputAgent"
+    },
+    "in_24": {
+        "id": 25,
+        "target": [
+            "hidden_24"
+        ],
+        "type": "InputAgent"
+    },
+    "in_20": {
+        "id": 21,
+        "target": [
+            "hidden_20"
+        ],
+        "type": "InputAgent"
+    },
+    "in_5": {
+        "id": 6,
+        "target": [
+            "hidden_5"
+        ],
+        "type": "InputAgent"
+    },
+    "in_33": {
+        "id": 34,
+        "target": [
+            "hidden_33"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_15": {
+        "id": 54,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_23": {
+        "id": 24,
+        "target": [
+            "hidden_23"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_9": {
+        "id": 48,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_12": {
+        "id": 51,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_30": {
+        "id": 69,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_13": {
+        "id": 52,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_1": {
+        "id": 40,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_32": {
+        "id": 33,
+        "target": [
+            "hidden_32"
+        ],
+        "type": "InputAgent"
+    },
+    "in_18": {
+        "id": 19,
+        "target": [
+            "hidden_18"
+        ],
+        "type": "InputAgent"
+    },
+    "in_31": {
+        "id": 32,
+        "target": [
+            "hidden_31"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_29": {
+        "id": 68,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_30": {
+        "id": 31,
+        "target": [
+            "hidden_30"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_2": {
+        "id": 41,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_32": {
+        "id": 71,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_20": {
+        "id": 59,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_4": {
+        "id": 43,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "net": {
+        "id": 77,
+        "target": [],
+        "type": "NetworkAgent"
+    },
+    "in_29": {
+        "id": 30,
+        "target": [
+            "hidden_29"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_21": {
+        "id": 60,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_3": {
+        "id": 42,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_37": {
+        "id": 76,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_21": {
+        "id": 22,
+        "target": [
+            "hidden_21"
+        ],
+        "type": "InputAgent"
+    },
+    "in_34": {
+        "id": 35,
+        "target": [
+            "hidden_34"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_34": {
+        "id": 73,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_33": {
+        "id": 72,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_14": {
+        "id": 15,
+        "target": [
+            "hidden_14"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_14": {
+        "id": 53,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_11": {
+        "id": 12,
+        "target": [
+            "hidden_11"
+        ],
+        "type": "InputAgent"
+    },
+    "in_28": {
+        "id": 29,
+        "target": [
+            "hidden_28"
+        ],
+        "type": "InputAgent"
+    },
+    "in_27": {
+        "id": 28,
+        "target": [
+            "hidden_27"
+        ],
+        "type": "InputAgent"
+    },
+    "in_9": {
+        "id": 10,
+        "target": [
+            "hidden_9"
+        ],
+        "type": "InputAgent"
+    },
+    "in_25": {
+        "id": 26,
+        "target": [
+            "hidden_25"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_0": {
+        "id": 39,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_37": {
+        "id": 38,
+        "target": [
+            "hidden_37"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_8": {
+        "id": 47,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_24": {
+        "id": 63,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_6": {
+        "id": 45,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_22": {
+        "id": 23,
+        "target": [
+            "hidden_22"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_18": {
+        "id": 57,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_35": {
+        "id": 36,
+        "target": [
+            "hidden_35"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_17": {
+        "id": 56,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_13": {
+        "id": 14,
+        "target": [
+            "hidden_13"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_28": {
+        "id": 67,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_36": {
+        "id": 37,
+        "target": [
+            "hidden_36"
+        ],
+        "type": "InputAgent"
+    },
+    "in_2": {
+        "id": 3,
+        "target": [
+            "hidden_2"
+        ],
+        "type": "InputAgent"
+    },
+    "in_6": {
+        "id": 7,
+        "target": [
+            "hidden_6"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_7": {
+        "id": 46,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_31": {
+        "id": 70,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "in_10": {
+        "id": 11,
+        "target": [
+            "hidden_10"
+        ],
+        "type": "InputAgent"
+    },
+    "in_26": {
+        "id": 27,
+        "target": [
+            "hidden_26"
+        ],
+        "type": "InputAgent"
+    },
+    "hidden_36": {
+        "id": 75,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    },
+    "hidden_5": {
+        "id": 44,
+        "target": [
+            "net"
+        ],
+        "type": "HiddenAgent"
+    }
+}
