@@ -7,11 +7,12 @@ using ThreadTools, ProgressBars, Printf
 
 function generate_powerset(ids::Vector{Int64}, cid::Int64; mc::Bool=false)
     if mc
-        mapping = Dict{Int64, Int64}(1:length(ids) .=> ids)
+        mapping_dict = Dict{Int64, Int64}(1:length(ids) .=> ids)
+        mapping = x -> mapping_dict[x]
         N::Vector{Vector{Int64}} = generate_subsets(
             length(ids), length(ids)^2, cid
         )
-        return map(x -> mapping[x], N)
+        return map(x -> mapping.(x), N)
     else
         return collect(powerset(setdiff(ids, cid)))[2:end]
     end
