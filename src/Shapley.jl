@@ -9,7 +9,7 @@ function generate_powerset(ids::Vector{Int64}, cid::Int64; mc::Bool=false)
     if mc
         mapping = Dict{Int64, Int64}(1:length(ids) .=> ids)
         N::Vector{Vector{Int64}} = generate_subsets(
-            length(ids), (log(ℯ, 2^(length(ids)-1)+1))^2, cid
+            length(ids), length(ids)^2, cid
         )
         return map(x -> mapping.(x), N)
     else
