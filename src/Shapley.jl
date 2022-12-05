@@ -22,12 +22,12 @@ end
 
 function shapley(all_ids::Vector{Int64}, ids::Vector{Int64}, subset_acc::Function; mc::Bool=false)
 
-    shap = Dict{Int64, Float64}()
+    shap = Dict{Int64, BigFloat}()
 
     for cid in ids
         @printf "cid %d (idx: %d), length of ids: %d\n" cid findall(x->x==cid, ids)[1] length(ids)
 
-        ϕ::Float64 = .0
+        ϕ::BigFloat = .0
 
         N::Vector{Vector{Int64}} = generate_powerset(ids, cid, mc=mc)
         
@@ -39,10 +39,10 @@ function shapley(all_ids::Vector{Int64}, ids::Vector{Int64}, subset_acc::Functio
             m₍si₎::Float64 = subset_acc(union(S, cid))
             m₍s₎::Float64 = subset_acc(S)
 
-            γ₁::Int64 = factorial(λ)
-            γ₂::Int64 = factorial(length(ids)-λ-1)
-            γ₃::Int64 = factorial(length(ids))
-            γ::Float64 = γ₁ * γ₂ / γ₃
+            γ₁::BigInt = factorial(big(λ))
+            γ₂::BigInt = factorial(big(length(ids)-λ-1))
+            γ₃::BigInt = factorial(big(length(ids)))
+            γ::BigFloat = γ₁ * γ₂ / γ₃
 
             ϕ += (γ * (m₍si₎ - m₍s₎))
         end 
