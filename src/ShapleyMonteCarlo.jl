@@ -59,5 +59,5 @@ function generate_subsets(d::Int64, k::Int64, i::Int64)
             append!(result, [Set(tmp)])
         end
     end
-    return unique(result)
+    return collect.(unique(result))
 end
