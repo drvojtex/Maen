@@ -8,9 +8,11 @@ using ThreadTools, ProgressBars, Printf
 function generate_powerset(ids::Vector{Int64}, cid::Int64; mc::Bool=false)
     if mc
         mapping_dict = Dict{Int64, Int64}(1:length(ids) .=> ids)
+        mapping_dict_inv = Dict{Int64, Int64}(ids .=> 1:length(ids))
         mapping = x -> mapping_dict[x]
+        mapping_inv = x -> mapping_dict_inv[x]
         N::Vector{Vector{Int64}} = generate_subsets(
-            length(ids), length(ids)^2, cid
+            length(ids), length(ids)^2, mapping_inv(cid)
         )
         return map(x -> mapping.(x), N)
     else
