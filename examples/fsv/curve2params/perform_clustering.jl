@@ -1,8 +1,8 @@
 
 function perform_clustering(data_tensor, clusters_cnt)
 
-    function get_clusters(smoothness, clustering)
-        clustering(correlation_graph(data_tensor; smoothness=smoothness))
+    function get_clusters(clustering)
+        clustering(dtw_graph(data_tensor))
     end
 
     ncc95(g) = nc_clustering(g; α=.95)
@@ -10,12 +10,11 @@ function perform_clustering(data_tensor, clusters_cnt)
     ncc999(g) = nc_clustering(g; α=.999)
     clustering_algs = [louvain_clustering, ncc95, ncc99, ncc999, cdep_clustering]
 
-    smoothness = 0.95
-    clustering_alg = clustering_algs[4]
+    clustering_alg = clustering_algs[1]
 
-    clusters = get_clusters(smoothness, clustering_alg);
+    clusters = get_clusters(clustering_alg);
     while length(unique(clusters)) != clusters_cnt
-        clusters = get_clusters(smoothness, clustering_alg)
+        clusters = get_clusters(clustering_alg)
     end
 
     println("There are ", length(unique(clusters)), " clusters.\n",

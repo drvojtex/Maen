@@ -1,25 +1,27 @@
 
 include("perform_clustering.jl")
 
-dataset_a = BSON.load("data/dataset_a.bson")
+dataset_a = BSON.load("../data/dataset_a.bson")
 data_tensor = dataset_a[:data_tensor] * (-1);
 
-clusters = perform_clustering(data_tensor, 12)
+clusters = perform_clustering(data_tensor, 19)
 
 data_tensor[:,:,1] ./= maximum(data_tensor[:,:,1])
 data_tensor[:,:,2] ./= maximum(data_tensor[:,:,2])
 
 data = map(s -> 
     map(i -> 
-        s[findall(x -> x == i, clusters), :], 1:12)
+        s[findall(x -> x == i, clusters), :], 1:19)
     , eachslice(data_tensor; dims=1)
 )
 
+#=
 for i=1:100
-    for j=8:12
+    for j=12:19
         data[i][j] .*= 0
     end
 end
+=#
 
 labels = deepcopy(Matrix(dataset_a[:parameters]))
 for i=1:4
