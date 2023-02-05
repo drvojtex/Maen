@@ -21,7 +21,7 @@ cb = () -> (
 Flux.Optimise.train!(
     loss, Flux.params(eco.ps_obj), 
     repeatedly(minibatch, 1000), ADAM(),
-    cb = Flux.throttle(cb, 0.1)
+    cb = Flux.throttle(cb, 1)
 )
 
 println("total train: accuracy = ", acc(minibatch()...), " loss = ", loss(minibatch()...));
