@@ -30,6 +30,8 @@ function shapley(all_ids::Vector{Int64}, ids::Vector{Int64}, subset_acc::Functio
         ϕ::BigFloat = .0
 
         N::Vector{Vector{Int64}} = generate_powerset(ids, cid, mc=mc)
+
+        @show length(N)
         
         for S in ProgressBar(N) 
 
