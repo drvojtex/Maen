@@ -80,12 +80,8 @@ function subset_model(eco::Ecosystem, data::Any, subset::Vector{Int64}; noise::B
     values = []
     for c::Component in eco.schc
         mo = model_output(eco, c, data, values)
-        println(mo)
-        println(c.id)
-        println(subset)
-        println()
         mo = c.id ∈ subset ? mo : (
-            noise ? mo .* randn(Float32, size(mo)) : mo .* Float32(.0)
+            noise ? map(tmp -> tmp .* randn(Float32), mo) : map(tmp -> tmp .* Float32(.0), mo)
         )
         values = vcat(values, [mo])
     end
