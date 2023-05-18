@@ -32,8 +32,6 @@ mutable struct Component{T <: ComponentType} <: AbstractComponent{T}
     name::String
     "Function defining the math model of the component."
     model::Any
-    "Score of the component's importance in the schema"
-    importance::AbstractFloat
 end
 
 """
@@ -62,8 +60,7 @@ function Base.show(io::IO, a::Component)
             json(Dict(
             :id => string(a.id),
             :name => a.name,
-            :type => typeof(a).parameters[1],
-            :importance => hasproperty(a, :importance) ? a.importance : Nothing
+            :type => typeof(a).parameters[1]
         ), 4)
     )
 end
