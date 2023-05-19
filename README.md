@@ -113,7 +113,7 @@ julia> function testbatch()
 ```
 
 Creating neural network model. In the file **boston_housing_topology.xgml** is defined topology of the neural network model (visible in following Figure).
-![Alt text](examples/boston_housing_topology.pdf?raw=true) 
+![Alt text](examples/boston_housing_topology.png?raw=true) 
 ```julia
 julia> eco = create_ecosystem("boston_housing_topology.xgml")
 julia> eco.ii = Dict( 
