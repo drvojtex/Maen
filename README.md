@@ -1,13 +1,13 @@
 # Maen - Multiple agents ecosystem network
 
-
+## Overview
 
 
 ## Example of usage
 
-### Overview
+### Introduction
 
-- There is an simple example of usage on Boston housing dataset [MLDatasetsBostonhousing]: <https://docs.juliahub.com/MLDatasets/9CUQK/0.5.13/datasets/BostonHousing/>. 
+- There is an simple example of usage on [Boston housing dataset](https://docs.juliahub.com/MLDatasets/9CUQK/0.5.13/datasets/BostonHousing/ "MLDatasets package Boston Housing"). 
 - The dataset contains 506 samples, each of them has got 13 continuous attributes (including target attribute "MEDV"), 1 binary-valued attribute. 
 - The goal is to perform a regression of the (continious) target variable.
 - Sources: (a) Origin: This dataset was taken from the StatLib library which is maintained at Carnegie Mellon University. (b) Creator: Harrison, D. and Rubinfeld, D.L. 'Hedonic prices and the demand for clean air', J. Environ. Economics & Management, vol.5, 81-102, 1978. (c) Date: July 7, 1993
@@ -73,7 +73,7 @@ julia> for n1 in dataset.metadata["feature_names"]
         end
 ```
 
-Performing Louvain communities detection on similarity graph. The implementation of the Louvain method is from the library [CDalgs]: <https://github.com/drvojtex/CDalgs>. 
+Performing Louvain communities detection on similarity graph. The implementation of the Louvain method is from the [CDalgs library](https://github.com/drvojtex/CDalgs "CDalgs"). 
 ```julia
 julia> clusters_mapping = louvain_clustering(g) # [1, 2, 1, 3, 1, 2, 1, 4, 1, 1, 1, 4, 1]
 julia> mapping_dict = Dict()
