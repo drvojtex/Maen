@@ -1,7 +1,8 @@
 
-using Flux, HypothesisTests, StatsBase, Statistics
-using DataFrames
-using Graphs, SimpleWeightedGraphs, CDalgs
+using Flux, IterTools
+using HypothesisTests, StatsBase, Statistics, Random, LinearAlgebra
+using DataFrames, Graphs, SimpleWeightedGraphs
+using Maen, CDalgs
 using MLDatasets: BostonHousing
 using Logging
 
@@ -36,3 +37,87 @@ for m in sort(unique(clusters_mapping))
 end
 println()
 
+@info "Transforming dataset samples"
+df = deepcopy(dataset.features)
+mapcols!(x -> x .- minimum(x), df)
+mapcols!(x -> x ./ maximum(x), df)
+data = map(s -> 
+    map(i ->  Vector{Float32}(collect(s[mapping_dict[i]])), 1:length(keys(mapping_dict))),
+    eachrow(df)
+)
+
+@info "Preparing labels"
+labels = Float32.(dataset.targets)[!, 1]
+labels .-= minimum(labels)
+labels ./= maximum(labels)
+
+@info "Preparing minibatch and test batch"
+shuffle_vec = shuffle(1:length(labels))
+function minibatch()
+    tmp_sv = shuffle(shuffle_vec[1:Int(floor(length(shuffle_vec)*0.8))])
+    s = 1:Int(floor(length(tmp_sv)*0.8))
+    deepcopy(data)[tmp_sv[s]], deepcopy(labels)[tmp_sv[s]]'
+end
+function testbatch()
+    s = Int(floor(length(shuffle_vec)*0.8)):length(shuffle_vec)
+    deepcopy(data)[shuffle_vec[s]], deepcopy(labels)[shuffle_vec[s]]'
+end
+
+@info "Creating neural network model"
+eco = create_ecosystem("boston_housing_topology.xgml")
+eco.ii = Dict( 
+    map(x -> x.id, sort(filter(x->typeof(x)==Component{InputAgent}, collect(values(eco.comps))), by=x->parse(Int, replace(x.name, "in"=>""))))
+    .=>
+    1:length(keys(mapping_dict))
+)
+params_objects = []
+function get_model_dense(dims)
+    d1 = Dense(dims, 10, relu)
+    d2 = Dense(10, 10, relu)
+    function get_model_dense(x)
+        d2(d1(x))
+    end
+    append!(params_objects, [d1, d2])
+    return get_model_dense
+end
+for i=1:length(keys(mapping_dict))
+    eco.comps[string("h",i)].model = 
+        get_model_dense(length(mapping_dict[i]))
+end
+function get_model_out(dims)
+    d = Dense(dims, 1)
+    function get_model_out(x)
+        d(vcat(x...))
+    end
+    append!(params_objects, [d])
+    return get_model_out
+end
+eco.comps["out"].model = get_model_out(10*length(keys(mapping_dict)))
+eco.schc = scv(eco.comps, eco.sch)
+eco.ps_obj = params_objects
+function nn(input_data::Any)
+    reduce(vcat, Maen.model(eco, input_data)[end])
+end
+
+@info "Training neural network model"
+batchrun = s -> reduce(hcat, map(x -> nn(x), s))
+loss = (x, y) -> Flux.mse(batchrun(x), y)
+rerr = (x, y) -> median(abs.(map(x->nn(x), x) .- y)./abs.(y))
+R2 = (x,y) -> 1 - sum((batchrun(x).-y).^2)/sum((y.-mean(y)).^2)
+cb = () -> (
+    println(        
+        " loss = (", loss(minibatch()...), ", ", loss(testbatch()...), " )", 
+        " rerr = (", rerr(minibatch()...), ", ", rerr(testbatch()...), " )",
+        " R2 = (", R2(minibatch()...), ", ", R2(testbatch()...), " )"
+    )
+)    
+Flux.Optimise.train!(
+    loss, Flux.params(eco.ps_obj), 
+    repeatedly(minibatch, 100), ADAM(),
+    cb = Flux.throttle(cb, 1)
+)
+println("total train: relative error = ", acc(minibatch()...), " loss = ", loss(minibatch()...));
+println("total test: realtive error = ", acc(testbatch()...), " loss = ", loss(testbatch()...));
+println("R2 score: train = ", R2(minibatch()...), ", test = ", R2(testbatch()...))
+
+println(sum(length, Flux.params(eco.ps_obj)))
