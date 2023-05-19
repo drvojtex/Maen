@@ -1,7 +1,7 @@
 # Maen - Multiple agents ecosystem network
 
 ## Overview
-
+Maen is a framework for generating neural networks. The model is generated on topologies given in XGML format (for example, using [yEd](https://www.yworks.com/products/yed#yed-support-resources "yEd software homepage") software). The framework also includes tools for explainability of model components using [Shapley values](https://www.google.com/search?client=safari&rls=en&q=shapley+numbers+loyd&ie=UTF-8&oe=UTF-8 "Shapley values Wikipedia").
 
 ## Example of usage
 
