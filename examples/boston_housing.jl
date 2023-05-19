@@ -113,11 +113,26 @@ cb = () -> (
 )    
 Flux.Optimise.train!(
     loss, Flux.params(eco.ps_obj), 
-    repeatedly(minibatch, 100), ADAM(),
+    repeatedly(minibatch, 1000), ADAM(),
     cb = Flux.throttle(cb, 1)
 )
-println("total train: relative error = ", acc(minibatch()...), " loss = ", loss(minibatch()...));
-println("total test: realtive error = ", acc(testbatch()...), " loss = ", loss(testbatch()...));
+println("total train: relative error = ", rerr(minibatch()...), " loss = ", loss(minibatch()...));
+println("total test: realtive error = ", rerr(testbatch()...), " loss = ", loss(testbatch()...));
 println("R2 score: train = ", R2(minibatch()...), ", test = ", R2(testbatch()...))
+println("Trainable parameters count: ", sum(length, Flux.params(eco.ps_obj)))
 
-println(sum(length, Flux.params(eco.ps_obj)))
+@info "Perform Shapley values explainability"
+subset_rerr(S, x, y) = 1/median(((abs.(reduce(hcat, map(s -> subset_model(eco, s, S)[end], x)).-y))./y))
+input_shaps = Dict(
+    filter(x->x.id == key, collect(values(eco.comps)))[1].name =>
+    value
+    for (key, value) in 
+    inputagents_shapley(eco, testbatch()[1], testbatch()[2], subset_rerr, monteCarlo=false)
+)
+hidden_shaps = Dict(
+    filter(x->x.id == key, collect(values(eco.comps)))[1].name =>
+    value
+    for (key, value) in 
+    hiddenagents_shapley(eco, testbatch()[1], testbatch()[2], subset_rerr, monteCarlo=false)
+)
+

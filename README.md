@@ -175,8 +175,21 @@ julia> println("total train: relative error = ", acc(minibatch()...), " loss = "
        println("Trainable parameters count: ", sum(length, Flux.params(eco.ps_obj)))
 ```
 
+Performing explainability of components via Shapley values.
+```julia
+julia> subset_rerr(S, x, y) = 1/median(((abs.(reduce(hcat, map(s -> subset_model(eco, s, S)[end], x)).-y))./y))
+julia> input_shaps = Dict(
+          filter(x->x.id == key, collect(values(eco.comps)))[1].name => value
+          for (key, value) in 
+          inputagents_shapley(eco, testbatch()[1], testbatch()[2], subset_rerr, monteCarlo=false)
+       )
+julia> hidden_shaps = Dict(
+          filter(x->x.id == key, collect(values(eco.comps)))[1].name => value
+          for (key, value) in 
+          hiddenagents_shapley(eco, testbatch()[1], testbatch()[2], subset_rerr, monteCarlo=false)
+       )
+```
+
 ## License
 
 GNU GENERAL PUBLIC LICENSE Version 2, June 1991
-
-   
