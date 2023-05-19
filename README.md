@@ -7,10 +7,10 @@
 
 ### Overview
 
-> There is an simple example of usage on Boston housing dataset [MLDatasetsBostonhousing]: <https://docs.juliahub.com/MLDatasets/9CUQK/0.5.13/datasets/BostonHousing/>. 
-> The dataset contains 506 samples, each of them has got 13 continuous attributes (including target attribute "MEDV"), 1 binary-valued attribute. 
-> The goal is to perform a regression of the (continious) target variable.
-> Sources: (a) Origin: This dataset was taken from the StatLib library which is maintained at Carnegie Mellon University. (b) Creator: Harrison, D. and Rubinfeld, D.L. 'Hedonic prices and the demand for clean air', J. Environ. Economics & Management, vol.5, 81-102, 1978. (c) Date: July 7, 1993
+- There is an simple example of usage on Boston housing dataset [MLDatasetsBostonhousing]: <https://docs.juliahub.com/MLDatasets/9CUQK/0.5.13/datasets/BostonHousing/>. 
+- The dataset contains 506 samples, each of them has got 13 continuous attributes (including target attribute "MEDV"), 1 binary-valued attribute. 
+- The goal is to perform a regression of the (continious) target variable.
+- Sources: (a) Origin: This dataset was taken from the StatLib library which is maintained at Carnegie Mellon University. (b) Creator: Harrison, D. and Rubinfeld, D.L. 'Hedonic prices and the demand for clean air', J. Environ. Economics & Management, vol.5, 81-102, 1978. (c) Date: July 7, 1993
 
 Features of the dataset:
 Symbol | Caption
