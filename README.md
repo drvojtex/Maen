@@ -14,7 +14,7 @@
 
 Features of the dataset:
 Symbol | Caption
-----------------
+-------|--------
 CRIM | per capita crime rate by town
 ZN | proportion of residential land zoned for lots over 25,000 sq.ft.
 INDUS | proportion of non-retail business acres per town
@@ -31,7 +31,7 @@ LSTAT | % lower status of the population
 
 Target of the dataset:
 Symbol | Caption
-----------------
+-------|---------
 MEDV | Median value of owner-occupied homes in 1000's of dollars
 
 ### Codes & commands
