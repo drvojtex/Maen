@@ -3,6 +3,8 @@
 ## Overview
 Maen is a framework for generating neural networks. The model is generated on topologies given in XGML format (for example, using [yEd](https://www.yworks.com/products/yed#yed-support-resources "yEd software homepage") software). The framework also includes tools for explainability of model components using [Shapley values](https://www.google.com/search?client=safari&rls=en&q=shapley+numbers+loyd&ie=UTF-8&oe=UTF-8 "Shapley values Wikipedia").
 
+This library was used during research of [diploma thesis](https://gitlab.fel.cvut.cz/kozelvo1/kozelvo1_diploma_project "Vojtěch Drahý: Explainable neural networks") together with [CDalgs library](https://github.com/drvojtex/CDalgs "Communities detection algorithms library").
+
 ## Example of usage
 
 ### Introduction
@@ -73,7 +75,7 @@ julia> for n1 in dataset.metadata["feature_names"]
         end
 ```
 
-Performing Louvain communities detection on similarity graph. The implementation of the Louvain method is from the [CDalgs library](https://github.com/drvojtex/CDalgs "CDalgs"). 
+Performing Louvain communities detection on similarity graph. The implementation of the Louvain method is from the [CDalgs library](https://github.com/drvojtex/CDalgs "Communities detection algorithms library"). 
 ```julia
 julia> clusters_mapping = louvain_clustering(g) # [1, 2, 1, 3, 1, 2, 1, 4, 1, 1, 1, 4, 1]
 julia> mapping_dict = Dict()
